@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="web_dashboard" name="shell-type"/>
+  <title>Smart College ERS - Student Dashboard</title>
+
+  <!-- Google Material Symbols & Inter Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+
+  <style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+    ::-webkit-scrollbar { display: none; }
+  </style>
+
+  <!-- Tailwind CSS & Theme Config -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-bright": "#faf8ff",
+            "tertiary": "#00246b",
+            "tertiary-fixed": "#dbe1ff",
+            "background": "#faf8ff",
+            "on-error-container": "#93000a",
+            "primary-fixed": "#dce1ff",
+            "outline-variant": "#c5c5d3",
+            "tertiary-container": "#00389a",
+            "tertiary-fixed-dim": "#b4c5ff",
+            "on-tertiary": "#ffffff",
+            "surface-variant": "#dae2fd",
+            "on-secondary-fixed": "#0d1c2e",
+            "on-primary": "#ffffff",
+            "surface": "#faf8ff",
+            "surface-dim": "#d2d9f4",
+            "on-background": "#131b2e",
+            "on-tertiary-fixed": "#00174b",
+            "inverse-on-surface": "#eef0ff",
+            "error": "#ba1a1a",
+            "on-primary-fixed-variant": "#264191",
+            "on-secondary-container": "#57657a",
+            "inverse-surface": "#283044",
+            "on-surface-variant": "#444651",
+            "surface-container-lowest": "#ffffff",
+            "inverse-primary": "#b6c4ff",
+            "surface-container-high": "#e2e7ff",
+            "surface-container-highest": "#dae2fd",
+            "on-primary-container": "#90a8ff",
+            "secondary-fixed": "#d5e3fc",
+            "primary-container": "#1e3a8a",
+            "on-error": "#ffffff",
+            "on-secondary-fixed-variant": "#3a485b",
+            "on-secondary": "#ffffff",
+            "on-tertiary-fixed-variant": "#003ea8",
+            "surface-tint": "#4059aa",
+            "on-surface": "#131b2e",
+            "surface-container": "#eaedff",
+            "secondary-fixed-dim": "#b9c7df",
+            "secondary-container": "#d5e3fc",
+            "on-primary-fixed": "#00164e",
+            "error-container": "#ffdad6",
+            "outline": "#757682",
+            "primary": "#00236f",
+            "surface-container-low": "#f2f3ff",
+            "on-tertiary-container": "#8da9ff",
+            "secondary": "#515f74",
+            "primary-fixed-dim": "#b6c4ff"
+          },
+          borderRadius: {
+            DEFAULT: "0.25rem",
+            lg: "0.5rem",
+            xl: "0.75rem",
+            full: "9999px"
+          },
+          spacing: {
+            "space-lg": "1.5rem",
+            "space-md": "1rem",
+            "space-xs": "0.25rem",
+            "space-xl": "2rem",
+            "space-sm": "0.5rem",
+            "margin-compact": "1rem",
+            margin: "2rem",
+            gutter: "1.5rem",
+            "gutter-dense": "1rem"
+          },
+          fontFamily: {
+            "body-sm": ["Inter"],
+            "label-sm": ["Inter"],
+            "headline-sm": ["Inter"],
+            display: ["Inter"],
+            "body-lg": ["Inter"],
+            "label-md": ["Inter"],
+            "headline-md": ["Inter"],
+            "body-md": ["Inter"],
+            "headline-lg": ["Inter"],
+            "tabular-data": ["Inter"]
+          },
+          fontSize: {
+            "body-sm": ["13px", { lineHeight: "18px", letterSpacing: "0em", fontWeight: "400" }],
+            "label-sm": ["11px", { lineHeight: "14px", letterSpacing: "0.04em", fontWeight: "600" }],
+            "headline-sm": ["16px", { lineHeight: "24px", letterSpacing: "0em", fontWeight: "600" }],
+            display: ["32px", { lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "700" }],
+            "body-lg": ["16px", { lineHeight: "24px", letterSpacing: "0em", fontWeight: "400" }],
+            "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "500" }],
+            "headline-md": ["20px", { lineHeight: "28px", letterSpacing: "-0.01em", fontWeight: "600" }],
+            "body-md": ["14px", { lineHeight: "20px", letterSpacing: "0em", fontWeight: "400" }],
+            "headline-lg": ["24px", { lineHeight: "32px", letterSpacing: "-0.015em", fontWeight: "600" }],
+            "tabular-data": ["13px", { lineHeight: "18px", letterSpacing: "0em", fontWeight: "400" }]
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body class="bg-background font-body-md text-on-surface antialiased">
+
+  <!-- ================= CONSISTENT SIDEBAR NAVIGATION ================= -->
+  <aside class="fixed left-0 top-0 h-screen w-60 bg-surface-container-lowest border-r border-outline-variant/40 z-50 flex flex-col justify-between select-none">
+    <div class="flex flex-col">
+      
+      <!-- Institutional Brand Header -->
+      <div class="h-16 px-space-md border-b border-outline-variant/30 flex items-center min-w-0">
+        <a href="home.html" class="flex items-center gap-space-sm min-w-0">
+          <div class="w-9 h-9 rounded bg-primary-container text-on-primary flex items-center justify-center shrink-0 shadow-sm">
+            <span class="material-symbols-outlined text-[20px]">school</span>
+          </div>
+          <div class="flex flex-col min-w-0">
+            <span class="font-headline-sm text-headline-sm leading-tight text-on-surface truncate">Smart College</span>
+            <span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary">Education Record System</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="p-space-md"></div>
+
+      <!-- Main Clean Navigation -->
+      <nav id="sidebarNav" class="px-space-sm space-y-space-xs">
+        
+        <!-- 1. Home Page -->
+        <a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-sm text-body-sm transition-colors" href="home.html">
+          <span class="material-symbols-outlined text-[18px]">home</span>
+          <span>Home</span>
+        </a>
+
+        <!-- 2. Student Dashboard (Active) -->
+        <a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-space-xs rounded transition-colors bg-secondary-container text-primary font-semibold" href="student-dashboard.html">
+          <span class="material-symbols-outlined text-[18px]">dashboard</span>
+          <span>Student Dashboard</span>
+        </a>
+
+        <!-- 3. Detailed Marks -->
+        <a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-sm text-body-sm transition-colors" href="student-marks.html">
+          <span class="material-symbols-outlined text-[18px]">grade</span>
+          <span>Detailed Marks</span>
+        </a>
+
+        <!-- 4. About ERS -->
+        <a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-sm text-body-sm transition-colors" href="about.html">
+          <span class="material-symbols-outlined text-[18px]">info</span>
+          <span>About ERS</span>
+        </a>
+
+        <!-- 5. Sign Out -->
+        <a id="navSignOutBtn" class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-error hover:bg-error-container/40 transition-colors font-body-sm text-body-sm cursor-pointer" href="../index.html">
+          <span class="material-symbols-outlined text-[18px]">logout</span>
+          <span>Sign Out</span>
+        </a>
+
+      </nav>
+    </div>
+
+    <!-- Institutional Footer Compliance Strip -->
+    <div class="p-space-md border-t border-outline-variant/30 bg-surface-container-low">
+      <div class="flex items-center gap-space-xs mb-space-xs text-secondary">
+        <span class="material-symbols-outlined text-[14px]">verified_user</span>
+        <span class="font-label-sm text-label-sm font-semibold tracking-wide uppercase">FERPA Compliant</span>
+      </div>
+      <p class="font-label-sm text-label-sm text-on-surface-variant leading-tight">TLS 1.3 Secure • Institutional Node v4.2.1</p>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN CONTENT WRAPPER ================= -->
+  <div class="pl-60 min-h-screen flex flex-col bg-background">
+    
+    <!-- Top Bar Header -->
+    <header class="fixed top-0 left-60 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-md border-b border-outline-variant/40 z-40 px-space-lg flex items-center justify-between">
+      <div class="flex items-center gap-space-md text-on-surface-variant font-label-md text-label-md">
+        <span class="flex items-center gap-space-xs text-secondary font-medium">
+          <span class="material-symbols-outlined text-[16px]">calendar_today</span>
+          <span>Academic Session 2025–2026</span>
+        </span>
+        <span class="text-outline-variant">•</span>
+        <span class="text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded text-[11px] font-semibold">
+          Active Student Portal
+        </span>
+      </div>
+
+      <!-- Student Profile & Notification Actions -->
+      <div class="flex items-center gap-space-md">
+        
+        <!-- Header Student Information Pill -->
+        <div class="hidden md:flex items-center divide-x divide-outline-variant/40 bg-surface-container-low px-space-md py-1.5 rounded border border-outline-variant/40 font-tabular-data text-body-sm shadow-xs">
+          <div class="pr-space-md text-right">
+            <div id="studentHeaderName" class="font-headline-sm text-body-sm text-on-surface font-semibold">Alexander Vance</div>
+            <div id="studentHeaderPin" class="font-label-sm text-label-sm text-secondary font-mono">PIN: 22481A4201</div>
+          </div>
+          <div class="pl-space-md text-left">
+            <div id="studentHeaderDept" class="font-label-md text-label-md text-on-surface">Dept: Computer Science &amp; Eng</div>
+            <div id="studentHeaderBatch" class="font-label-sm text-label-sm text-secondary">III Year • Sem 5</div>
+          </div>
+        </div>
+
+        <button class="w-8 h-8 rounded flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button" title="Campus Circulars" onclick="document.getElementById('circularsSection')?.scrollIntoView({ behavior: 'smooth' });">
+          <span class="material-symbols-outlined text-[20px]">notifications</span>
+        </button>
+        
+        <div class="w-8 h-8 rounded-full bg-primary-container text-on-primary flex items-center justify-center shadow-xs font-semibold text-xs" id="studentAvatar">
+          <span>A</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Body -->
+    <main class="relative pt-16 flex-1 w-full p-margin bg-background">
+      <div class="flex flex-col w-full space-y-space-lg max-w-7xl mx-auto">
+        
+        <!-- Welcome Banner -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-space-sm pt-2">
+          <div>
+            <h1 class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tight">
+              Welcome back, <span id="welcomeName">Alexander</span>
+            </h1>
+            <p class="font-body-sm text-body-sm text-secondary mt-0.5">
+              Department of Computer Science &amp; Engineering • Current Academic Progress
+            </p>
+          </div>
+          <a href="student-marks.html" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-primary-container hover:bg-[#172554] text-white text-xs font-semibold shadow-xs transition-colors self-start sm:self-auto">
+            <span class="material-symbols-outlined text-[16px]">visibility</span>
+            <span>View Full Academic Marks</span>
+          </a>
+        </div>
+
+        <!-- ================= PRIMARY ACADEMIC SUMMARY ROW (Attendance & Marks) ================= -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
+          
+          <!-- 1. Overall Attendance Card -->
+          <div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm border border-outline-variant/30 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between pb-space-sm border-b border-outline-variant/20">
+                <div class="flex items-center gap-2">
+                  <div class="w-8 h-8 rounded-lg bg-surface-container-low flex items-center justify-center text-primary">
+                    <span class="material-symbols-outlined text-[20px]">event_available</span>
+                  </div>
+                  <div>
+                    <h2 class="font-headline-sm text-body-md text-on-surface font-semibold">Overall Attendance</h2>
+                    <p class="font-label-sm text-[11px] text-secondary">Academic Session 2025–26 Quorum</p>
+                  </div>
+                </div>
+                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                  Eligible for Exams (>75%)
+                </span>
+              </div>
+
+              <!-- Main Attendance Display -->
+              <div class="my-space-md">
+                <div class="flex items-baseline justify-between mb-2">
+                  <span id="kpiAttendance" class="font-display text-[42px] leading-none text-on-surface font-bold tracking-tight">86.5%</span>
+                  <span class="font-body-sm text-secondary text-xs">
+                    <strong class="text-on-surface font-semibold">179</strong> of 207 total classes attended
+                  </span>
+                </div>
+                
+                <!-- Progress Bar -->
+                <div class="w-full h-3 rounded-full bg-surface-container overflow-hidden">
+                  <div id="attendanceBar" class="h-full bg-primary-container rounded-full transition-all duration-500" style="width: 86.5%;"></div>
+                </div>
+              </div>
+
+              <!-- Statutory Information -->
+              <div class="grid grid-cols-3 gap-2 py-space-xs text-center border-t border-b border-outline-variant/20 my-space-xs">
+                <div class="p-2 bg-surface-container-low rounded-lg">
+                  <div class="font-label-sm text-[11px] text-secondary">Present</div>
+                  <div class="font-headline-sm text-body-md text-on-surface font-bold mt-0.5">179 hrs</div>
+                </div>
+                <div class="p-2 bg-surface-container-low rounded-lg">
+                  <div class="font-label-sm text-[11px] text-secondary">Absent</div>
+                  <div class="font-headline-sm text-body-md text-error font-bold mt-0.5">28 hrs</div>
+                </div>
+                <div class="p-2 bg-surface-container-low rounded-lg">
+                  <div class="font-label-sm text-[11px] text-secondary">Quorum Buffer</div>
+                  <div class="font-headline-sm text-body-md text-emerald-700 font-bold mt-0.5">+11.5%</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Bottom Note -->
+            <div class="pt-space-sm flex items-center justify-between text-xs text-secondary">
+              <span class="flex items-center gap-1 text-[11px]">
+                <span class="material-symbols-outlined text-[14px] text-primary">check_circle</span>
+                Statutory university requirement: 75.0%
+              </span>
+              <span class="text-[11px] text-secondary font-tabular-data">Updated today</span>
+            </div>
+          </div>
+
+          <!-- 2. Marks & Cumulative Grade Card (Clickable to Detailed Marks Page) -->
+          <div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm border border-outline-variant/30 flex flex-col justify-between group hover:border-primary/50 transition-all cursor-pointer relative" onclick="window.location.href='student-marks.html'">
+            <div>
+              <div class="flex items-center justify-between pb-space-sm border-b border-outline-variant/20">
+                <div class="flex items-center gap-2">
+                  <div class="w-8 h-8 rounded-lg bg-surface-container-low flex items-center justify-center text-primary group-hover:bg-primary-container group-hover:text-white transition-colors">
+                    <span class="material-symbols-outlined text-[20px]">grade</span>
+                  </div>
+                  <div>
+                    <h2 class="font-headline-sm text-body-md text-on-surface font-semibold">Marks &amp; Academic Grade</h2>
+                    <p class="font-label-sm text-[11px] text-secondary">Cumulative Grade Point Average (CGPA)</p>
+                  </div>
+                </div>
+                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-surface-container-high text-primary border border-outline-variant/40">
+                  First Class with Distinction
+                </span>
+              </div>
+
+              <!-- Main Grade Display -->
+              <div class="my-space-md">
+                <div class="flex items-baseline justify-between mb-2">
+                  <div class="flex items-baseline gap-1.5">
+                    <span id="kpiCgpa" class="font-display text-[42px] leading-none text-on-surface font-bold tracking-tight">8.92</span>
+                    <span class="font-body-md text-secondary font-medium">/ 10.0 CGPA</span>
+                  </div>
+                  <span class="font-body-sm text-xs text-primary font-semibold flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+                    <span>View Breakdown</span>
+                    <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+                  </span>
+                </div>
+
+                <!-- Academic Standing Bar -->
+                <div class="w-full h-3 rounded-full bg-surface-container overflow-hidden">
+                  <div class="h-full bg-primary rounded-full" style="width: 89.2%;"></div>
+                </div>
+              </div>
+
+              <!-- Grade Quick Stats -->
+              <div class="grid grid-cols-3 gap-2 py-space-xs text-center border-t border-b border-outline-variant/20 my-space-xs">
+                <div class="p-2 bg-surface-container-low rounded-lg">
+                  <div class="font-label-sm text-[11px] text-secondary">Sem 5 SGPA</div>
+                  <div class="font-headline-sm text-body-md text-on-surface font-bold mt-0.5">9.10</div>
+                </div>
+                <div class="p-2 bg-surface-container-low rounded-lg">
+                  <div class="font-label-sm text-[11px] text-secondary">Credits Earned</div>
+                  <div class="font-headline-sm text-body-md text-on-surface font-bold mt-0.5">118 / 160</div>
+                </div>
+                <div class="p-2 bg-surface-container-low rounded-lg">
+                  <div class="font-label-sm text-[11px] text-secondary">Active Backlogs</div>
+                  <div class="font-headline-sm text-body-md text-emerald-700 font-bold mt-0.5">0 Clean</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Bottom Action Link -->
+            <div class="pt-space-sm flex items-center justify-between text-xs">
+              <span class="text-secondary text-[11px]">
+                Click anywhere to view detailed subject-wise &amp; sem-wise scores
+              </span>
+              <span class="text-primary font-semibold text-xs flex items-center gap-1 group-hover:underline">
+                Open Detailed Marks →
+              </span>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ================= CIRCULARS SECTION (Simple & Clean) ================= -->
+        <section id="circularsSection" class="grid grid-cols-1 lg:grid-cols-2 gap-space-lg pt-2">
+          
+          <!-- 1. Department Circulars (Posted by Faculty) -->
+          <div class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/30 flex flex-col justify-between overflow-hidden">
+            <div>
+              <div class="p-space-md bg-surface-container-low flex items-center justify-between border-b border-outline-variant/30">
+                <div class="flex items-center gap-2">
+                  <div class="w-8 h-8 rounded-lg bg-surface-container-lowest flex items-center justify-center text-primary">
+                    <span class="material-symbols-outlined text-[18px]">campaign</span>
+                  </div>
+                  <div>
+                    <h3 class="font-headline-sm text-body-md text-on-surface font-semibold">Department Circulars</h3>
+                    <p class="font-label-sm text-[11px] text-secondary">Official announcements posted by CSE Faculty</p>
+                  </div>
+                </div>
+                <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-secondary-container text-on-secondary-container">
+                  Faculty Feed
+                </span>
+              </div>
+
+              <!-- List of Department Notices -->
+              <div class="divide-y divide-outline-variant/20 p-space-sm">
+                
+                <!-- Notice 1 -->
+                <article class="p-space-sm hover:bg-surface-container-low rounded-lg transition-colors">
+                  <div class="flex items-start justify-between gap-2">
+                    <h4 class="font-headline-sm text-body-sm text-on-surface font-semibold leading-snug">
+                      Unit Test II Syllabus Freezing &amp; Question Bank
+                    </h4>
+                    <span class="font-label-sm text-[10px] text-primary font-semibold whitespace-nowrap bg-secondary-container/80 px-2 py-0.5 rounded">
+                      Today, 09:30 AM
+                    </span>
+                  </div>
+                  <p class="font-body-sm text-xs text-on-surface-variant mt-1 leading-relaxed">
+                    Chapters 3 and 4 have been finalized for Unit Test II. Recommended numerical problem sets and review solutions are published in the digital course catalog.
+                  </p>
+                  <div class="mt-2 flex items-center gap-1.5 text-[11px] text-secondary">
+                    <span class="material-symbols-outlined text-[14px] text-primary">person</span>
+                    <span class="font-medium text-on-surface">Dr. Marcus Vance</span>
+                    <span>• Head of Department, CSE</span>
+                  </div>
+                </article>
+
+                <!-- Notice 2 -->
+                <article class="p-space-sm hover:bg-surface-container-low rounded-lg transition-colors">
+                  <div class="flex items-start justify-between gap-2">
+                    <h4 class="font-headline-sm text-body-sm text-on-surface font-semibold leading-snug">
+                      Cloud Computing Project Milestone 1 Submission
+                    </h4>
+                    <span class="font-label-sm text-[10px] text-secondary font-medium whitespace-nowrap">
+                      Yesterday, 04:15 PM
+                    </span>
+                  </div>
+                  <p class="font-body-sm text-xs text-on-surface-variant mt-1 leading-relaxed">
+                    Milestone 1 project repository links and architecture documents must be submitted on the lab portal before Friday 23:59 EST.
+                  </p>
+                  <div class="mt-2 flex items-center gap-1.5 text-[11px] text-secondary">
+                    <span class="material-symbols-outlined text-[14px] text-primary">person</span>
+                    <span class="font-medium text-on-surface">Dr. Sarah Lin</span>
+                    <span>• Associate Professor &amp; Lab In-Charge</span>
+                  </div>
+                </article>
+
+                <!-- Notice 3 -->
+                <article class="p-space-sm hover:bg-surface-container-low rounded-lg transition-colors">
+                  <div class="flex items-start justify-between gap-2">
+                    <h4 class="font-headline-sm text-body-sm text-on-surface font-semibold leading-snug">
+                      Spring Term 2026 Elective Advisory Session
+                    </h4>
+                    <span class="font-label-sm text-[10px] text-secondary font-medium whitespace-nowrap">
+                      Oct 22, 2025
+                    </span>
+                  </div>
+                  <p class="font-body-sm text-xs text-on-surface-variant mt-1 leading-relaxed">
+                    Orientation on elective tracks (AI/ML, Distributed Systems, Information Security) will be conducted in Seminar Hall 2 on Wednesday.
+                  </p>
+                  <div class="mt-2 flex items-center gap-1.5 text-[11px] text-secondary">
+                    <span class="material-symbols-outlined text-[14px] text-primary">person</span>
+                    <span class="font-medium text-on-surface">Prof. Marcus Thorne</span>
+                    <span>• Academic Counselor</span>
+                  </div>
+                </article>
+
+              </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="p-space-sm bg-surface-container-low border-t border-outline-variant/20 px-space-md text-[11px] text-secondary flex items-center justify-between">
+              <span>Department of Computer Science &amp; Engineering</span>
+              <span class="text-primary font-medium">3 New Notices</span>
+            </div>
+          </div>
+
+          <!-- 2. College Institutional Circulars -->
+          <div class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/30 flex flex-col justify-between overflow-hidden">
+            <div>
+              <div class="p-space-md bg-surface-container-low flex items-center justify-between border-b border-outline-variant/30">
+                <div class="flex items-center gap-2">
+                  <div class="w-8 h-8 rounded-lg bg-surface-container-lowest flex items-center justify-center text-primary">
+                    <span class="material-symbols-outlined text-[18px]">account_balance</span>
+                  </div>
+                  <div>
+                    <h3 class="font-headline-sm text-body-md text-on-surface font-semibold">College Circulars</h3>
+                    <p class="font-label-sm text-[11px] text-secondary">Campus-wide notifications &amp; academic schedules</p>
+                  </div>
+                </div>
+                <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-secondary-container text-on-secondary-container">
+                  Institutional
+                </span>
+              </div>
+
+              <!-- List of College Notices -->
+              <div class="divide-y divide-outline-variant/20 p-space-sm">
+                
+                <!-- Notice 1 -->
+                <article class="p-space-sm hover:bg-surface-container-low rounded-lg transition-colors">
+                  <div class="flex items-start justify-between gap-2">
+                    <h4 class="font-headline-sm text-body-sm text-on-surface font-semibold leading-snug">
+                      Fall Term Final Examination Schedule &amp; Hall Allocation
+                    </h4>
+                    <span class="font-label-sm text-[10px] text-secondary font-medium whitespace-nowrap">
+                      Oct 24, 2025
+                    </span>
+                  </div>
+                  <p class="font-body-sm text-xs text-on-surface-variant mt-1 leading-relaxed">
+                    The University Examination Cell has published room allocations and exam center date-sheets. Biometric ID and verified hall tickets are mandatory for entry.
+                  </p>
+                  <div class="mt-2 flex items-center gap-1.5 text-[11px] text-secondary">
+                    <span class="material-symbols-outlined text-[14px] text-primary">account_balance</span>
+                    <span class="font-medium text-on-surface">Controller of Examinations</span>
+                    <span>• Central Academic Cell</span>
+                  </div>
+                </article>
+
+                <!-- Notice 2 -->
+                <article class="p-space-sm hover:bg-surface-container-low rounded-lg transition-colors">
+                  <div class="flex items-start justify-between gap-2">
+                    <h4 class="font-headline-sm text-body-sm text-on-surface font-semibold leading-snug">
+                      Campus Computing Facility (CCF) Server Maintenance
+                    </h4>
+                    <span class="font-label-sm text-[10px] text-secondary font-medium whitespace-nowrap">
+                      Oct 20, 2025
+                    </span>
+                  </div>
+                  <p class="font-body-sm text-xs text-on-surface-variant mt-1 leading-relaxed">
+                    Firmware maintenance on campus core switches will take place this Sunday from 02:00 to 06:00 EST. Student portal logins will remain operational.
+                  </p>
+                  <div class="mt-2 flex items-center gap-1.5 text-[11px] text-secondary">
+                    <span class="material-symbols-outlined text-[14px] text-primary">dns</span>
+                    <span class="font-medium text-on-surface">IT Services Division</span>
+                    <span>• Infrastructure Operations</span>
+                  </div>
+                </article>
+
+                <!-- Notice 3 -->
+                <article class="p-space-sm hover:bg-surface-container-low rounded-lg transition-colors">
+                  <div class="flex items-start justify-between gap-2">
+                    <h4 class="font-headline-sm text-body-sm text-on-surface font-semibold leading-snug">
+                      Annual Inter-College Research Colloquium 2025
+                    </h4>
+                    <span class="font-label-sm text-[10px] text-secondary font-medium whitespace-nowrap">
+                      Oct 18, 2025
+                    </span>
+                  </div>
+                  <p class="font-body-sm text-xs text-on-surface-variant mt-1 leading-relaxed">
+                    Call for undergraduate research papers under IEEE conference formats. Selected projects receive university publication sponsorship and cash honors.
+                  </p>
+                  <div class="mt-2 flex items-center gap-1.5 text-[11px] text-secondary">
+                    <span class="material-symbols-outlined text-[14px] text-primary">science</span>
+                    <span class="font-medium text-on-surface">Academic Research Council</span>
+                    <span>• Dean of Academic Affairs</span>
+                  </div>
+                </article>
+
+              </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="p-space-sm bg-surface-container-low border-t border-outline-variant/20 px-space-md text-[11px] text-secondary flex items-center justify-between">
+              <span>Smart College of Engineering &amp; Technology</span>
+              <span class="text-primary font-medium">Archives Preserved</span>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- Simple Clean Footer Note -->
+        <footer class="p-space-md bg-surface-container-low rounded-lg flex flex-wrap items-center justify-between gap-space-sm text-secondary font-body-sm text-xs border border-outline-variant/30">
+          <div class="flex items-center gap-space-xs">
+            <span class="material-symbols-outlined text-[16px] text-primary">policy</span>
+            <span>Academic Portal • <span id="footerStudentPin">Alexander Vance (PIN: 22481A4201)</span></span>
+          </div>
+          <div class="font-label-sm text-[11px] text-secondary">
+            Session 2025–2026 • Autonomous Regulation Framework
+          </div>
+        </footer>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Supabase JS Client SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Scripts -->
+  <script src="../js/config.js"></script>
+  <script src="../js/supabaseClient.js"></script>
+  <script src="../js/facultyData.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Role Enforcement Guard
+      const user = window.authService?.getCurrentUser();
+      if (!user) {
+        alert('Access Restricted: Please sign in with your student PIN to view the Student Dashboard.');
+        window.location.href = '../index.html';
+        return;
+      } else if (user.role !== 'student') {
+        alert('Access Restricted: You are signed in as Faculty. Redirecting to Faculty Dashboard...');
+        window.location.href = 'faculty-dashboard.html';
+        return;
+      }
+
+      // 2. Dynamic Student & Circulars Refresh Handler (Zero-Lag Sync)
+      function refreshStudentDashboard() {
+        const currentUser = window.authService?.getCurrentUser() || user;
+        const studentPin = currentUser.pin || '22481A4201';
+        let studentRecord = null;
+        if (window.facultyData) {
+          studentRecord = window.facultyData.getStudentByPin(studentPin);
+        }
+
+        const studentName = studentRecord?.name || currentUser.name || 'Alexander Vance';
+        const studentDept = studentRecord?.department || currentUser.department || 'Computer Science & Engineering';
+        const attendanceVal = studentRecord?.attendance ?? currentUser.attendance ?? 86.5;
+        const cgpaVal = studentRecord?.cgpa ?? currentUser.cgpa ?? 8.92;
+
+        document.getElementById('studentHeaderName').textContent = studentName;
+        document.getElementById('welcomeName').textContent = studentName.split(' ')[0] || studentName;
+        document.getElementById('studentHeaderPin').textContent = `PIN: ${studentPin}`;
+        document.getElementById('studentHeaderDept').textContent = `Dept: ${studentDept}`;
+        document.getElementById('footerStudentPin').textContent = `${studentName} (PIN: ${studentPin})`;
+
+        // Attendance Display
+        const attString = `${attendanceVal}%`;
+        const kpiAttEl = document.getElementById('kpiAttendance');
+        if (kpiAttEl) kpiAttEl.textContent = attString;
+        const bar = document.getElementById('attendanceBar');
+        if (bar) bar.style.width = attString;
+
+        // CGPA Display
+        const cgpaEl = document.getElementById('kpiCgpa');
+        if (cgpaEl) {
+          cgpaEl.textContent = typeof cgpaVal === 'number' ? cgpaVal.toFixed(2) : cgpaVal;
+        }
+
+        // Set avatar letter
+        const avatarEl = document.getElementById('studentAvatar');
+        if (avatarEl && studentName) {
+          avatarEl.innerHTML = `<span class="font-bold text-xs">${studentName.charAt(0)}</span>`;
+        }
+
+        // Render Circular Announcements dynamically
+        if (window.facultyData) {
+          const announcements = window.facultyData.getAnnouncements();
+          const deptAnnouncements = announcements.filter(a => a.category === 'Department Announcements');
+          const univAnnouncements = announcements.filter(a => a.category === 'University Announcements');
+
+          // Render Department Announcements
+          const deptContainer = document.querySelector('#circularsSection > div:first-child .divide-y');
+          if (deptContainer && deptAnnouncements.length > 0) {
+            deptContainer.innerHTML = '';
+            deptAnnouncements.forEach(a => {
+              const art = document.createElement('article');
+              art.className = 'p-space-sm hover:bg-surface-container-low rounded-lg transition-colors';
+              art.innerHTML = `
+                <div class="flex items-start justify-between gap-2">
+                  <h4 class="font-headline-sm text-body-sm text-on-surface font-semibold leading-snug">
+                    ${a.title}
+                  </h4>
+                  <span class="font-label-sm text-[10px] text-primary font-semibold whitespace-nowrap bg-secondary-container/80 px-2 py-0.5 rounded">
+                    ${a.date}
+                  </span>
+                </div>
+                <p class="font-body-sm text-xs text-on-surface-variant mt-1 leading-relaxed">
+                  ${a.matter}
+                </p>
+                <div class="mt-2 flex items-center gap-1.5 text-[11px] text-secondary">
+                  <span class="material-symbols-outlined text-[14px] text-primary">person</span>
+                  <span class="font-medium text-on-surface">${a.author}</span>
+                  <span>• ${a.target || 'CSE Dept'}</span>
+                </div>
+              `;
+              deptContainer.appendChild(art);
+            });
+          }
+
+          // Render University Announcements
+          const univContainer = document.querySelector('#circularsSection > div:last-child .divide-y');
+          if (univContainer && univAnnouncements.length > 0) {
+            univContainer.innerHTML = '';
+            univAnnouncements.forEach(a => {
+              const art = document.createElement('article');
+              art.className = 'p-space-sm hover:bg-surface-container-low rounded-lg transition-colors';
+              art.innerHTML = `
+                <div class="flex items-start justify-between gap-2">
+                  <h4 class="font-headline-sm text-body-sm text-on-surface font-semibold leading-snug">
+                    ${a.title}
+                  </h4>
+                  <span class="font-label-sm text-[10px] text-secondary font-medium whitespace-nowrap">
+                    ${a.date}
+                  </span>
+                </div>
+                <p class="font-body-sm text-xs text-on-surface-variant mt-1 leading-relaxed">
+                  ${a.matter}
+                </p>
+                <div class="mt-2 flex items-center gap-1.5 text-[11px] text-secondary">
+                  <span class="material-symbols-outlined text-[14px] text-primary">account_balance</span>
+                  <span class="font-medium text-on-surface">${a.author}</span>
+                  <span>• ${a.target || 'Campus-Wide'}</span>
+                </div>
+              `;
+              univContainer.appendChild(art);
+            });
+          }
+        }
+      }
+
+      // Initial Refresh & Live Supabase Sync
+      refreshStudentDashboard();
+      if (window.facultyData && window.facultyData.syncFromSupabase) {
+        window.facultyData.syncFromSupabase().then(() => refreshStudentDashboard());
+      }
+
+      // Zero-Lag Cross-Tab & Same-Tab Listeners
+      window.addEventListener('storage', (e) => {
+        if (e.key === 'ers_faculty_student_marks' || e.key === 'ers_faculty_students_list' || e.key === 'ers_faculty_announcements_list' || e.key === 'ers_last_sync_pulse' || e.key === 'smart_college_ers_user') {
+          refreshStudentDashboard();
+        }
+      });
+      window.addEventListener('ers_data_sync', () => {
+        refreshStudentDashboard();
+      });
+
+      // 3. Theme Toggle (Sync with localStorage)
+      const savedTheme = localStorage.getItem('ers_theme') || 'light';
+      if (savedTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+        document.body.classList.add('dark-mode');
+      }
+
+      // 4. Logout Handler
+      const navSignOutBtn = document.getElementById('navSignOutBtn');
+      if (navSignOutBtn) {
+        navSignOutBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (confirm('Are you sure you want to sign out of the Student Academic Portal?')) {
+            window.authService.logout();
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

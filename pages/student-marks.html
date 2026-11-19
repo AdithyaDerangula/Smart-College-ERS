@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="web_dashboard" name="shell-type"/>
+  <title>Smart College ERS - Detailed Student Marks</title>
+
+  <!-- Google Material Symbols & Inter Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+
+  <style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+    ::-webkit-scrollbar { display: none; }
+    @media print {
+      aside, header, #backToDashBtn, #printBtn, #sidebarNav, .no-print {
+        display: none !important;
+      }
+      .pl-60 {
+        padding-left: 0 !important;
+      }
+      main {
+        padding-top: 0 !important;
+      }
+    }
+  </style>
+
+  <!-- Tailwind CSS & Theme Config -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-bright": "#faf8ff",
+            "tertiary": "#00246b",
+            "tertiary-fixed": "#dbe1ff",
+            "background": "#faf8ff",
+            "on-error-container": "#93000a",
+            "primary-fixed": "#dce1ff",
+            "outline-variant": "#c5c5d3",
+            "tertiary-container": "#00389a",
+            "tertiary-fixed-dim": "#b4c5ff",
+            "on-tertiary": "#ffffff",
+            "surface-variant": "#dae2fd",
+            "on-secondary-fixed": "#0d1c2e",
+            "on-primary": "#ffffff",
+            "surface": "#faf8ff",
+            "surface-dim": "#d2d9f4",
+            "on-background": "#131b2e",
+            "on-tertiary-fixed": "#00174b",
+            "inverse-on-surface": "#eef0ff",
+            "error": "#ba1a1a",
+            "on-primary-fixed-variant": "#264191",
+            "on-secondary-container": "#57657a",
+            "inverse-surface": "#283044",
+            "on-surface-variant": "#444651",
+            "surface-container-lowest": "#ffffff",
+            "inverse-primary": "#b6c4ff",
+            "surface-container-high": "#e2e7ff",
+            "surface-container-highest": "#dae2fd",
+            "on-primary-container": "#90a8ff",
+            "secondary-fixed": "#d5e3fc",
+            "primary-container": "#1e3a8a",
+            "on-error": "#ffffff",
+            "on-secondary-fixed-variant": "#3a485b",
+            "on-secondary": "#ffffff",
+            "on-tertiary-fixed-variant": "#003ea8",
+            "surface-tint": "#4059aa",
+            "on-surface": "#131b2e",
+            "surface-container": "#eaedff",
+            "secondary-fixed-dim": "#b9c7df",
+            "secondary-container": "#d5e3fc",
+            "on-primary-fixed": "#00164e",
+            "error-container": "#ffdad6",
+            "outline": "#757682",
+            "primary": "#00236f",
+            "surface-container-low": "#f2f3ff",
+            "on-tertiary-container": "#8da9ff",
+            "secondary": "#515f74",
+            "primary-fixed-dim": "#b6c4ff"
+          },
+          borderRadius: {
+            DEFAULT: "0.25rem",
+            lg: "0.5rem",
+            xl: "0.75rem",
+            full: "9999px"
+          },
+          spacing: {
+            "space-lg": "1.5rem",
+            "space-md": "1rem",
+            "space-xs": "0.25rem",
+            "space-xl": "2rem",
+            "space-sm": "0.5rem",
+            "margin-compact": "1rem",
+            margin: "2rem",
+            gutter: "1.5rem",
+            "gutter-dense": "1rem"
+          },
+          fontFamily: {
+            "body-sm": ["Inter"],
+            "label-sm": ["Inter"],
+            "headline-sm": ["Inter"],
+            display: ["Inter"],
+            "body-lg": ["Inter"],
+            "label-md": ["Inter"],
+            "headline-md": ["Inter"],
+            "body-md": ["Inter"],
+            "headline-lg": ["Inter"],
+            "tabular-data": ["Inter"]
+          },
+          fontSize: {
+            "body-sm": ["13px", { lineHeight: "18px", letterSpacing: "0em", fontWeight: "400" }],
+            "label-sm": ["11px", { lineHeight: "14px", letterSpacing: "0.04em", fontWeight: "600" }],
+            "headline-sm": ["16px", { lineHeight: "24px", letterSpacing: "0em", fontWeight: "600" }],
+            display: ["32px", { lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "700" }],
+            "body-lg": ["16px", { lineHeight: "24px", letterSpacing: "0em", fontWeight: "400" }],
+            "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "500" }],
+            "headline-md": ["20px", { lineHeight: "28px", letterSpacing: "-0.01em", fontWeight: "600" }],
+            "body-md": ["14px", { lineHeight: "20px", letterSpacing: "0em", fontWeight: "400" }],
+            "headline-lg": ["24px", { lineHeight: "32px", letterSpacing: "-0.015em", fontWeight: "600" }],
+            "tabular-data": ["13px", { lineHeight: "18px", letterSpacing: "0em", fontWeight: "400" }]
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body class="bg-background font-body-md text-on-surface antialiased">
+
+  <!-- ================= CONSISTENT SIDEBAR NAVIGATION ================= -->
+  <aside class="fixed left-0 top-0 h-screen w-60 bg-surface-container-lowest border-r border-outline-variant/40 z-50 flex flex-col justify-between select-none">
+    <div class="flex flex-col">
+      
+      <!-- Institutional Brand Header -->
+      <div class="h-16 px-space-md border-b border-outline-variant/30 flex items-center min-w-0">
+        <a href="home.html" class="flex items-center gap-space-sm min-w-0">
+          <div class="w-9 h-9 rounded bg-primary-container text-on-primary flex items-center justify-center shrink-0 shadow-sm">
+            <span class="material-symbols-outlined text-[20px]">school</span>
+          </div>
+          <div class="flex flex-col min-w-0">
+            <span class="font-headline-sm text-headline-sm leading-tight text-on-surface truncate">Smart College</span>
+            <span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary">Education Record System</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="p-space-md"></div>
+
+      <!-- Main Clean Navigation -->
+      <nav id="sidebarNav" class="px-space-sm space-y-space-xs">
+        
+        <!-- 1. Home Page -->
+        <a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-sm text-body-sm transition-colors" href="home.html">
+          <span class="material-symbols-outlined text-[18px]">home</span>
+          <span>Home</span>
+        </a>
+
+        <!-- 2. Student Dashboard -->
+        <a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-sm text-body-sm transition-colors" href="student-dashboard.html">
+          <span class="material-symbols-outlined text-[18px]">dashboard</span>
+          <span>Student Dashboard</span>
+        </a>
+
+        <!-- 3. Detailed Marks (Active) -->
+        <a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-space-xs rounded transition-colors bg-secondary-container text-primary font-semibold" href="student-marks.html">
+          <span class="material-symbols-outlined text-[18px]">grade</span>
+          <span>Detailed Marks</span>
+        </a>
+
+        <!-- 4. About ERS -->
+        <a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-sm text-body-sm transition-colors" href="about.html">
+          <span class="material-symbols-outlined text-[18px]">info</span>
+          <span>About ERS</span>
+        </a>
+
+        <!-- 5. Sign Out -->
+        <a id="navSignOutBtn" class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-error hover:bg-error-container/40 transition-colors font-body-sm text-body-sm cursor-pointer" href="../index.html">
+          <span class="material-symbols-outlined text-[18px]">logout</span>
+          <span>Sign Out</span>
+        </a>
+
+      </nav>
+    </div>
+
+    <!-- Institutional Footer Compliance Strip -->
+    <div class="p-space-md border-t border-outline-variant/30 bg-surface-container-low">
+      <div class="flex items-center gap-space-xs mb-space-xs text-secondary">
+        <span class="material-symbols-outlined text-[14px]">verified_user</span>
+        <span class="font-label-sm text-label-sm font-semibold tracking-wide uppercase">FERPA Compliant</span>
+      </div>
+      <p class="font-label-sm text-label-sm text-on-surface-variant leading-tight">TLS 1.3 Secure • Institutional Node v4.2.1</p>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN CONTENT WRAPPER ================= -->
+  <div class="pl-60 min-h-screen flex flex-col bg-background">
+    
+    <!-- Top Bar Header -->
+    <header class="fixed top-0 left-60 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-md border-b border-outline-variant/40 z-40 px-space-lg flex items-center justify-between">
+      <div class="flex items-center gap-space-sm text-on-surface-variant font-label-md text-label-md">
+        <a href="student-dashboard.html" class="flex items-center gap-1 text-primary hover:underline font-medium">
+          <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+          <span>Dashboard</span>
+        </a>
+        <span class="text-outline-variant">/</span>
+        <span class="text-on-surface font-semibold">Semester &amp; Subject-Wise Marks</span>
+      </div>
+
+      <!-- Student Profile & Notification Actions -->
+      <div class="flex items-center gap-space-md">
+        
+        <!-- Header Student Information Pill -->
+        <div class="hidden md:flex items-center divide-x divide-outline-variant/40 bg-surface-container-low px-space-md py-1.5 rounded border border-outline-variant/40 font-tabular-data text-body-sm shadow-xs">
+          <div class="pr-space-md text-right">
+            <div id="studentHeaderName" class="font-headline-sm text-body-sm text-on-surface font-semibold">Alexander Vance</div>
+            <div id="studentHeaderPin" class="font-label-sm text-label-sm text-secondary font-mono">PIN: 22481A4201</div>
+          </div>
+          <div class="pl-space-md text-left">
+            <div id="studentHeaderDept" class="font-label-md text-label-md text-on-surface">Dept: Computer Science &amp; Eng</div>
+            <div id="studentHeaderBatch" class="font-label-sm text-label-sm text-secondary">III Year • Sem 5</div>
+          </div>
+        </div>
+
+        <button id="printBtn" class="px-3 py-1.5 rounded bg-surface-container-low hover:bg-surface-container border border-outline-variant/40 text-on-surface text-xs font-semibold flex items-center gap-1.5 transition-colors" type="button" onclick="window.print()">
+          <span class="material-symbols-outlined text-[16px]">print</span>
+          <span class="hidden sm:inline">Print Grade Sheet</span>
+        </button>
+        
+        <div class="w-8 h-8 rounded-full bg-primary-container text-on-primary flex items-center justify-center shadow-xs font-semibold text-xs" id="studentAvatar">
+          <span>A</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Body -->
+    <main class="relative pt-16 flex-1 w-full p-margin bg-background">
+      <div class="flex flex-col w-full space-y-space-lg max-w-7xl mx-auto">
+        
+        <!-- Navigation & Breadcrumb Row -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-space-sm pt-2">
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <a href="student-dashboard.html" class="inline-flex items-center gap-1 text-xs text-primary hover:underline font-semibold">
+                <span class="material-symbols-outlined text-[14px]">arrow_back</span>
+                Back to Dashboard
+              </a>
+              <span class="text-outline-variant">•</span>
+              <span class="text-xs text-secondary">Official Academic Transcript</span>
+            </div>
+            <h1 class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tight">
+              Student Marks &amp; Academic Performance
+            </h1>
+            <p class="font-body-sm text-body-sm text-secondary mt-0.5">
+              Comprehensive subject-wise marks, internal evaluations, and semester grade point averages.
+            </p>
+          </div>
+        </div>
+
+        <!-- ================= CUMULATIVE ACADEMIC OVERVIEW BANNER ================= -->
+        <section class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm border border-outline-variant/30">
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-space-md divide-y md:divide-y-0 md:divide-x divide-outline-variant/30">
+            
+            <!-- Metric 1: CGPA -->
+            <div class="flex flex-col justify-center">
+              <span class="font-label-sm text-[11px] uppercase tracking-wider text-secondary font-semibold">Cumulative Grade (CGPA)</span>
+              <div class="flex items-baseline gap-2 mt-1">
+                <span class="font-display text-[38px] leading-none font-bold text-on-surface">8.92</span>
+                <span class="text-xs text-secondary font-medium">/ 10.0 scale</span>
+              </div>
+              <span class="text-xs text-emerald-700 font-semibold mt-1 flex items-center gap-1">
+                <span class="material-symbols-outlined text-[14px]">verified</span>
+                First Class with Distinction
+              </span>
+            </div>
+
+            <!-- Metric 2: Credits Completed -->
+            <div class="flex flex-col justify-center md:pl-space-md pt-space-sm md:pt-0">
+              <span class="font-label-sm text-[11px] uppercase tracking-wider text-secondary font-semibold">Total Credits Completed</span>
+              <div class="flex items-baseline gap-2 mt-1">
+                <span class="font-display text-[38px] leading-none font-bold text-on-surface">118</span>
+                <span class="text-xs text-secondary font-medium">of 160 required</span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-surface-container mt-2 overflow-hidden">
+                <div class="h-full bg-primary-container rounded-full" style="width: 73.7%;"></div>
+              </div>
+            </div>
+
+            <!-- Metric 3: Academic Standing -->
+            <div class="flex flex-col justify-center md:pl-space-md pt-space-sm md:pt-0">
+              <span class="font-label-sm text-[11px] uppercase tracking-wider text-secondary font-semibold">Academic Standing</span>
+              <div class="flex items-baseline gap-2 mt-1">
+                <span class="font-display text-[26px] leading-none font-bold text-on-surface">Exemplary</span>
+              </div>
+              <span class="text-xs text-secondary mt-1">
+                Active Backlogs: <strong class="text-emerald-700 font-semibold">0 None</strong> (All cleared on 1st attempt)
+              </span>
+            </div>
+
+            <!-- Metric 4: Program Regulation -->
+            <div class="flex flex-col justify-center md:pl-space-md pt-space-sm md:pt-0">
+              <span class="font-label-sm text-[11px] uppercase tracking-wider text-secondary font-semibold">Curriculum Regulation</span>
+              <div class="mt-1 font-semibold text-body-md text-on-surface">
+                AR22 • Choice Based Credit System
+              </div>
+              <span class="text-xs text-secondary mt-0.5">
+                Evaluation: Continuous Assessment &amp; End Exam
+              </span>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ================= SEMESTER SELECTION TABS ================= -->
+        <section class="space-y-space-md">
+          <div class="flex items-center justify-between flex-wrap gap-2 border-b border-outline-variant/30 pb-2">
+            <div class="flex items-center gap-1.5 overflow-x-auto py-1">
+              <span class="text-xs font-semibold text-secondary mr-2 uppercase tracking-wider text-[11px]">Select Semester:</span>
+              <button onclick="switchSemester(1)" id="semTab-1" class="sem-tab px-3.5 py-1.5 rounded-lg text-xs font-medium text-secondary hover:bg-surface-container transition-colors">
+                Sem 1
+              </button>
+              <button onclick="switchSemester(2)" id="semTab-2" class="sem-tab px-3.5 py-1.5 rounded-lg text-xs font-medium text-secondary hover:bg-surface-container transition-colors">
+                Sem 2
+              </button>
+              <button onclick="switchSemester(3)" id="semTab-3" class="sem-tab px-3.5 py-1.5 rounded-lg text-xs font-medium text-secondary hover:bg-surface-container transition-colors">
+                Sem 3
+              </button>
+              <button onclick="switchSemester(4)" id="semTab-4" class="sem-tab px-3.5 py-1.5 rounded-lg text-xs font-medium text-secondary hover:bg-surface-container transition-colors">
+                Sem 4
+              </button>
+              <button onclick="switchSemester(5)" id="semTab-5" class="sem-tab px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-primary-container text-white shadow-xs transition-colors">
+                Sem 5 (Current)
+              </button>
+              <button onclick="switchSemester(6)" id="semTab-6" class="sem-tab px-3.5 py-1.5 rounded-lg text-xs font-medium text-secondary hover:bg-surface-container transition-colors">
+                Sem 6
+              </button>
+            </div>
+
+            <!-- Semester Summary Pill -->
+            <div id="semQuickInfo" class="flex items-center gap-space-md text-xs font-semibold bg-surface-container-low px-3 py-1.5 rounded-lg border border-outline-variant/30">
+              <span class="text-secondary font-normal">Semester 5 SGPA: <strong class="text-on-surface font-bold text-sm">9.10</strong></span>
+              <span class="text-outline-variant">•</span>
+              <span class="text-secondary font-normal">Credits: <strong class="text-on-surface font-bold text-sm">22.0</strong></span>
+              <span class="text-outline-variant">•</span>
+              <span class="text-emerald-700 font-semibold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">PASS</span>
+            </div>
+          </div>
+
+          <!-- ================= SUBJECT-WISE MARKS TABLE ================= -->
+          <div class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/30 overflow-hidden">
+            <div class="p-space-md bg-surface-container-low flex flex-wrap items-center justify-between gap-space-sm border-b border-outline-variant/30">
+              <div>
+                <h3 id="tableTitle" class="font-headline-sm text-body-md text-on-surface font-semibold">
+                  Semester 5 - Course-Wise Evaluation Breakdown
+                </h3>
+                <p id="tableSubtitle" class="font-label-sm text-[11px] text-secondary">
+                  Continuous Internal Assessment (CIA: 30%) + End Semester Examination (ESE: 70%)
+                </p>
+              </div>
+              <span class="text-xs text-secondary font-medium">
+                Autonomous Grading Standard (10 Point UGC Scale)
+              </span>
+            </div>
+
+            <!-- Table Container -->
+            <div class="overflow-x-auto">
+              <table class="w-full text-left font-tabular-data text-body-sm">
+                <thead class="bg-surface-container-low font-label-sm text-[11px] uppercase tracking-wider text-secondary border-b border-outline-variant/30 select-none">
+                  <tr>
+                    <th class="py-3 px-space-md" scope="col">Code</th>
+                    <th class="py-3 px-space-md" scope="col">Subject Title</th>
+                    <th class="py-3 px-space-sm text-right" scope="col" title="Internal Assessment 1 (Max 25)">Unit Test I (25)</th>
+                    <th class="py-3 px-space-sm text-right" scope="col" title="Internal Assessment 2 (Max 25)">Unit Test II (25)</th>
+                    <th class="py-3 px-space-sm text-right" scope="col" title="Lab / Assignment / Quiz (Max 25)">Pract/Assign (25)</th>
+                    <th class="py-3 px-space-sm text-right" scope="col" title="End Semester University Examination (Max 100)">End Sem (100)</th>
+                    <th class="py-3 px-space-sm text-right font-bold text-on-surface" scope="col">Total (%)</th>
+                    <th class="py-3 px-space-sm text-center" scope="col">Grade</th>
+                    <th class="py-3 px-space-sm text-center" scope="col">Points</th>
+                    <th class="py-3 px-space-sm text-center" scope="col">Credits</th>
+                    <th class="py-3 px-space-md text-center" scope="col">Result</th>
+                  </tr>
+                </thead>
+                <tbody id="marksTableBody" class="divide-y divide-outline-variant/20 text-on-surface">
+                  <!-- Dynamically populated via switchSemester() -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Table Summary Footer -->
+            <div id="tableFooter" class="p-space-md bg-surface-container-low flex flex-wrap items-center justify-between gap-space-sm text-xs border-t border-outline-variant/30">
+              <div class="flex items-center gap-space-md">
+                <span class="text-secondary font-medium">Total Registered Credits: <strong class="text-on-surface">22</strong></span>
+                <span class="text-outline-variant">•</span>
+                <span class="text-secondary font-medium">Total Weighted Marks: <strong class="text-on-surface">542 / 600 (90.3%)</strong></span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-secondary">Semester Grade Point Average:</span>
+                <span class="px-2.5 py-0.5 rounded bg-primary-container text-white font-bold text-xs">SGPA: 9.10</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= GRADING SYSTEM LEGEND ================= -->
+        <section class="p-space-md bg-surface-container-lowest rounded-xl border border-outline-variant/30">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="material-symbols-outlined text-[16px] text-primary">info</span>
+            <h4 class="font-headline-sm text-xs font-semibold text-on-surface uppercase tracking-wider">
+              Autonomous Grading System &amp; Point Values
+            </h4>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2 text-center text-xs">
+            <div class="p-2 rounded bg-surface-container-low border border-outline-variant/20">
+              <div class="font-bold text-primary">O (Outstanding)</div>
+              <div class="text-[11px] text-secondary mt-0.5">90 – 100% • 10 Pts</div>
+            </div>
+            <div class="p-2 rounded bg-surface-container-low border border-outline-variant/20">
+              <div class="font-bold text-primary">A+ (Excellent)</div>
+              <div class="text-[11px] text-secondary mt-0.5">80 – 89% • 9 Pts</div>
+            </div>
+            <div class="p-2 rounded bg-surface-container-low border border-outline-variant/20">
+              <div class="font-bold text-primary">A (Very Good)</div>
+              <div class="text-[11px] text-secondary mt-0.5">70 – 79% • 8 Pts</div>
+            </div>
+            <div class="p-2 rounded bg-surface-container-low border border-outline-variant/20">
+              <div class="font-bold text-secondary">B+ (Good)</div>
+              <div class="text-[11px] text-secondary mt-0.5">60 – 69% • 7 Pts</div>
+            </div>
+            <div class="p-2 rounded bg-surface-container-low border border-outline-variant/20">
+              <div class="font-bold text-secondary">B (Above Avg)</div>
+              <div class="text-[11px] text-secondary mt-0.5">50 – 59% • 6 Pts</div>
+            </div>
+            <div class="p-2 rounded bg-surface-container-low border border-outline-variant/20">
+              <div class="font-bold text-secondary">C (Pass)</div>
+              <div class="text-[11px] text-secondary mt-0.5">40 – 49% • 5 Pts</div>
+            </div>
+            <div class="p-2 rounded bg-surface-container-low border border-outline-variant/20">
+              <div class="font-bold text-error">F (Fail)</div>
+              <div class="text-[11px] text-secondary mt-0.5">&lt; 40% • 0 Pts</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Page Footer Note -->
+        <footer class="p-space-md bg-surface-container-low rounded-lg flex flex-wrap items-center justify-between gap-space-sm text-secondary font-body-sm text-xs border border-outline-variant/30">
+          <div class="flex items-center gap-space-xs">
+            <span class="material-symbols-outlined text-[16px] text-primary">policy</span>
+            <span>Controller of Examinations • Transcript Record for <span id="footerStudentPin">Alexander Vance (PIN: 22481A4201)</span></span>
+          </div>
+          <div class="font-label-sm text-[11px] text-secondary">
+            Generated on official ERS portal • All marks certified by Academic Council
+          </div>
+        </footer>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Supabase JS Client SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Scripts -->
+  <script src="../js/config.js"></script>
+  <script src="../js/supabaseClient.js"></script>
+  <script src="../js/facultyData.js"></script>
+  <script>
+    let currentStudentPin = "22481A4201";
+    // Dummy Data for Semester 1 to 6
+    const semesterData = {
+      1: {
+        title: "Semester 1 - First Year Core Engineering",
+        subtitle: "Academic Session 2023-24 • Autonomous Regulation 2022",
+        sgpa: "8.70",
+        credits: "20.0",
+        result: "PASS",
+        totalMarks: "492 / 550 (89.4%)",
+        subjects: [
+          { code: "MA101", title: "Linear Algebra & Calculus", ut1: 23, ut2: 22, lab: 24, end: 88, total: 89, grade: "A+", points: 9, credits: 4, result: "PASS" },
+          { code: "PH101", title: "Applied Physics", ut1: 22, ut2: 23, lab: 23, end: 84, total: 85, grade: "A+", points: 9, credits: 4, result: "PASS" },
+          { code: "CS101", title: "Problem Solving & C Programming", ut1: 24, ut2: 24, lab: 25, end: 92, total: 93, grade: "O", points: 10, credits: 4, result: "PASS" },
+          { code: "EE101", title: "Basic Electrical Engineering", ut1: 21, ut2: 20, lab: 22, end: 81, total: 82, grade: "A+", points: 9, credits: 3, result: "PASS" },
+          { code: "EN101", title: "Technical English Communication", ut1: 20, ut2: 21, lab: 23, end: 79, total: 80, grade: "A+", points: 9, credits: 2, result: "PASS" },
+          { code: "CS102", title: "Computer Programming Laboratory", ut1: 25, ut2: 24, lab: 25, end: 94, total: 94, grade: "O", points: 10, credits: 1.5, result: "PASS" },
+          { code: "PH102", title: "Engineering Physics Laboratory", ut1: 22, ut2: 23, lab: 24, end: 87, total: 88, grade: "A+", points: 9, credits: 1.5, result: "PASS" }
+        ]
+      },
+      2: {
+        title: "Semester 2 - Foundational Computer Science",
+        subtitle: "Academic Session 2023-24 • Autonomous Regulation 2022",
+        sgpa: "8.85",
+        credits: "20.0",
+        result: "PASS",
+        totalMarks: "508 / 550 (92.3%)",
+        subjects: [
+          { code: "MA201", title: "Differential Equations & Numerical Methods", ut1: 23, ut2: 24, lab: 23, end: 87, total: 88, grade: "A+", points: 9, credits: 4, result: "PASS" },
+          { code: "CS201", title: "Data Structures using C++", ut1: 24, ut2: 25, lab: 25, end: 94, total: 95, grade: "O", points: 10, credits: 4, result: "PASS" },
+          { code: "EC201", title: "Digital Logic & Computer Organization", ut1: 22, ut2: 22, lab: 23, end: 85, total: 86, grade: "A+", points: 9, credits: 4, result: "PASS" },
+          { code: "CH201", title: "Environmental Science & Chemistry", ut1: 21, ut2: 22, lab: 22, end: 80, total: 81, grade: "A+", points: 9, credits: 3, result: "PASS" },
+          { code: "ME201", title: "Engineering Graphics & Design", ut1: 22, ut2: 23, lab: 24, end: 86, total: 87, grade: "A+", points: 9, credits: 2, result: "PASS" },
+          { code: "CS202", title: "Data Structures Laboratory", ut1: 25, ut2: 25, lab: 25, end: 96, total: 96, grade: "O", points: 10, credits: 1.5, result: "PASS" },
+          { code: "EC202", title: "Digital Electronics Laboratory", ut1: 23, ut2: 24, lab: 24, end: 89, total: 90, grade: "O", points: 10, credits: 1.5, result: "PASS" }
+        ]
+      },
+      3: {
+        title: "Semester 3 - Second Year Core Computing",
+        subtitle: "Academic Session 2024-25 • Autonomous Regulation 2022",
+        sgpa: "8.65",
+        credits: "22.0",
+        result: "PASS",
+        totalMarks: "528 / 600 (88.0%)",
+        subjects: [
+          { code: "MA301", title: "Discrete Mathematical Structures", ut1: 22, ut2: 21, lab: 23, end: 82, total: 83, grade: "A+", points: 9, credits: 4, result: "PASS" },
+          { code: "CS301", title: "Object Oriented Programming via Java", ut1: 24, ut2: 23, lab: 25, end: 90, total: 91, grade: "O", points: 10, credits: 4, result: "PASS" },
+          { code: "CS302", title: "Computer Architecture & Organization", ut1: 21, ut2: 22, lab: 22, end: 84, total: 85, grade: "A+", points: 9, credits: 3, result: "PASS" },
+          { code: "CS303", title: "Formal Languages & Automata Theory", ut1: 20, ut2: 21, lab: 21, end: 79, total: 80, grade: "A+", points: 9, credits: 3, result: "PASS" },
+          { code: "CS304", title: "Principles of Operating Systems", ut1: 23, ut2: 23, lab: 24, end: 88, total: 89, grade: "A+", points: 9, credits: 3, result: "PASS" },
+          { code: "CS305", title: "Java Programming Laboratory", ut1: 25, ut2: 25, lab: 25, end: 95, total: 95, grade: "O", points: 10, credits: 2, result: "PASS" },
+          { code: "CS306", title: "Linux Shell Scripting & OS Lab", ut1: 23, ut2: 24, lab: 24, end: 90, total: 91, grade: "O", points: 10, credits: 2, result: "PASS" }
+        ]
+      },
+      4: {
+        title: "Semester 4 - Systems & Algorithms",
+        subtitle: "Academic Session 2024-25 • Autonomous Regulation 2022",
+        sgpa: "9.00",
+        credits: "22.0",
+        result: "PASS",
+        totalMarks: "548 / 600 (91.3%)",
+        subjects: [
+          { code: "CS401", title: "Design & Analysis of Algorithms", ut1: 24, ut2: 23, lab: 24, end: 91, total: 92, grade: "O", points: 10, credits: 4, result: "PASS" },
+          { code: "CS402", title: "Database Management Systems", ut1: 24, ut2: 24, lab: 25, end: 93, total: 94, grade: "O", points: 10, credits: 4, result: "PASS" },
+          { code: "CS403", title: "Computer Networks & Protocols", ut1: 23, ut2: 23, lab: 23, end: 87, total: 88, grade: "A+", points: 9, credits: 3, result: "PASS" },
+          { code: "CS404", title: "Software Engineering Methodologies", ut1: 22, ut2: 23, lab: 23, end: 86, total: 87, grade: "A+", points: 9, credits: 3, result: "PASS" },
+          { code: "MA401", title: "Probability & Statistics for Computing", ut1: 22, ut2: 21, lab: 22, end: 83, total: 84, grade: "A+", points: 9, credits: 3, result: "PASS" },
+          { code: "CS405", title: "Algorithms Implementation Lab", ut1: 25, ut2: 25, lab: 25, end: 96, total: 96, grade: "O", points: 10, credits: 2, result: "PASS" },
+          { code: "CS406", title: "DBMS SQL & PL/SQL Lab", ut1: 25, ut2: 24, lab: 25, end: 94, total: 94, grade: "O", points: 10, credits: 2, result: "PASS" }
+        ]
+      },
+      5: {
+        title: "Semester 5 - Advanced Computing & Distributed Systems",
+        subtitle: "Academic Session 2025-26 • Autonomous Regulation 2022 (Current Term)",
+        sgpa: "9.10",
+        credits: "22.0",
+        result: "PASS",
+        totalMarks: "542 / 600 (90.3%)",
+        subjects: [
+          { code: "CS501", title: "Advanced Operating Systems & Virtualization", ut1: 23.5, ut2: 24.0, lab: 24.5, end: 92.0, total: 93.0, grade: "O", points: 10, credits: 4, result: "PASS" },
+          { code: "CS502", title: "Web Technologies & Full Stack Architecture", ut1: 24.0, ut2: 23.5, lab: 25.0, end: 94.0, total: 94.5, grade: "O", points: 10, credits: 4, result: "PASS" },
+          { code: "CS503", title: "Compiler Design & Code Generation", ut1: 21.0, ut2: 22.0, lab: 22.5, end: 84.0, total: 85.0, grade: "A+", points: 9, credits: 3, result: "PASS" },
+          { code: "CS504", title: "Cryptography & Network Security", ut1: 20.0, ut2: 21.0, lab: 22.0, end: 80.0, total: 81.5, grade: "A+", points: 9, credits: 3, result: "PASS" },
+          { code: "CS505", title: "Artificial Intelligence & Expert Systems", ut1: 22.5, ut2: 23.0, lab: 24.0, end: 88.0, total: 89.0, grade: "A+", points: 9, credits: 3, result: "PASS" },
+          { code: "CS506", title: "Distributed Cloud Computing Lab", ut1: 24.5, ut2: 25.0, lab: 25.0, end: 96.0, total: 96.0, grade: "O", points: 10, credits: 2.5, result: "PASS" },
+          { code: "CS507", title: "Full Stack Web Application Development Lab", ut1: 25.0, ut2: 25.0, lab: 25.0, end: 95.0, total: 95.0, grade: "O", points: 10, credits: 2.5, result: "PASS" }
+        ]
+      },
+      6: {
+        title: "Semester 6 - Machine Learning & Cloud Frameworks",
+        subtitle: "Academic Session 2025-26 • Upcoming / Enrolled Term",
+        sgpa: "8.95 (Projected)",
+        credits: "22.0",
+        result: "REGISTERED",
+        totalMarks: "Evaluation in progress",
+        subjects: [
+          { code: "CS601", title: "Machine Learning & Pattern Recognition", ut1: 23.0, ut2: "-", lab: 24.0, end: "-", total: 89.0, grade: "A+", points: 9, credits: 4, result: "IN PROG" },
+          { code: "CS602", title: "Cloud Computing & DevOps Pipelines", ut1: 24.0, ut2: "-", lab: 24.5, end: "-", total: 92.0, grade: "O", points: 10, credits: 4, result: "IN PROG" },
+          { code: "CS603", title: "Big Data Analytics & Hadoop Ecosystem", ut1: 22.0, ut2: "-", lab: 23.0, end: "-", total: 86.0, grade: "A+", points: 9, credits: 3, result: "IN PROG" },
+          { code: "CS604", title: "Mobile Application Development (iOS/Android)", ut1: 23.5, ut2: "-", lab: 24.0, end: "-", total: 90.0, grade: "O", points: 10, credits: 3, result: "IN PROG" },
+          { code: "OE601", title: "Open Elective: Engineering Economics & Management", ut1: 21.0, ut2: "-", lab: 22.0, end: "-", total: 82.0, grade: "A+", points: 9, credits: 3, result: "IN PROG" },
+          { code: "CS605", title: "Machine Learning Tools & Python Lab", ut1: 25.0, ut2: "-", lab: 25.0, end: "-", total: 95.0, grade: "O", points: 10, credits: 2.5, result: "IN PROG" },
+          { code: "CS606", title: "Mini Project & Seminar Presentation", ut1: 24.0, ut2: "-", lab: 25.0, end: "-", total: 94.0, grade: "O", points: 10, credits: 2.5, result: "IN PROG" }
+        ]
+      }
+    };
+
+    let currentSem = 5;
+
+    function switchSemester(semNumber) {
+      currentSem = semNumber;
+      // 1. Update Tab styles
+      document.querySelectorAll('.sem-tab').forEach(btn => {
+        btn.classList.remove('bg-primary-container', 'text-white', 'shadow-xs');
+        btn.classList.add('text-secondary', 'hover:bg-surface-container');
+      });
+      const activeTab = document.getElementById(`semTab-${semNumber}`);
+      if (activeTab) {
+        activeTab.classList.remove('text-secondary', 'hover:bg-surface-container');
+        activeTab.classList.add('bg-primary-container', 'text-white', 'shadow-xs');
+      }
+
+      let data = semesterData[semNumber];
+      if (window.facultyData && currentStudentPin) {
+        const customSubs = window.facultyData.getStudentMarks(currentStudentPin, semNumber);
+        if (customSubs && customSubs.length > 0) {
+          data = {
+            ...data,
+            subjects: customSubs.map(s => {
+              const ut1 = parseFloat(s.ut1) || 0;
+              const ut2 = parseFloat(s.ut2) || 0;
+              const lab = parseFloat(s.lab) || 0;
+              const end = parseFloat(s.end) || 0;
+              const total = Math.min(100, Math.round(((ut1 + ut2) / 2) + (lab * 0.4) + (end * 0.65)));
+              let grade = 'A+';
+              let points = 9;
+              if (total >= 90) { grade = 'O'; points = 10; }
+              else if (total >= 80) { grade = 'A+'; points = 9; }
+              else if (total >= 70) { grade = 'A'; points = 8; }
+              else if (total >= 60) { grade = 'B+'; points = 7; }
+              else if (total >= 50) { grade = 'B'; points = 6; }
+              else if (total >= 40) { grade = 'C'; points = 5; }
+              else { grade = 'F'; points = 0; }
+
+              return {
+                code: s.code || 'CS',
+                title: s.title || 'Course',
+                ut1: ut1,
+                ut2: ut2,
+                lab: lab,
+                end: end,
+                total: total,
+                grade: grade,
+                points: points,
+                credits: 3.5,
+                result: total >= 40 ? 'PASS' : 'FAIL'
+              };
+            })
+          };
+        }
+      }
+
+      if (!data) return;
+
+      // 2. Update Header & Subtitles
+      document.getElementById('tableTitle').textContent = data.title;
+      document.getElementById('tableSubtitle').textContent = data.subtitle;
+
+      // 3. Update Quick Info Pill
+      const semQuickInfo = document.getElementById('semQuickInfo');
+      const isPass = data.result === 'PASS';
+      semQuickInfo.innerHTML = `
+        <span class="text-secondary font-normal">Semester ${semNumber} SGPA: <strong class="text-on-surface font-bold text-sm">${data.sgpa}</strong></span>
+        <span class="text-outline-variant">•</span>
+        <span class="text-secondary font-normal">Credits: <strong class="text-on-surface font-bold text-sm">${data.credits}</strong></span>
+        <span class="text-outline-variant">•</span>
+        <span class="${isPass ? 'text-emerald-700 bg-emerald-50 border-emerald-200' : 'text-primary bg-secondary-container border-secondary'} font-semibold px-2 py-0.5 rounded border">
+          ${data.result}
+        </span>
+      `;
+
+      // 4. Populate Table Rows
+      const tbody = document.getElementById('marksTableBody');
+      tbody.innerHTML = '';
+
+      data.subjects.forEach(sub => {
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-surface-container-low transition-colors';
+
+        const isOutstanding = sub.grade === 'O';
+        const isPassResult = sub.result === 'PASS';
+
+        tr.innerHTML = `
+          <td class="py-3 px-space-md font-mono text-xs font-semibold text-primary">${sub.code}</td>
+          <td class="py-3 px-space-md font-medium text-on-surface">${sub.title}</td>
+          <td class="py-3 px-space-sm text-right text-secondary">${sub.ut1}</td>
+          <td class="py-3 px-space-sm text-right text-secondary">${sub.ut2}</td>
+          <td class="py-3 px-space-sm text-right text-secondary">${sub.lab}</td>
+          <td class="py-3 px-space-sm text-right text-secondary">${sub.end}</td>
+          <td class="py-3 px-space-sm text-right font-bold text-on-surface">${sub.total}</td>
+          <td class="py-3 px-space-sm text-center">
+            <span class="inline-flex items-center justify-center w-7 h-6 rounded text-xs font-bold ${isOutstanding ? 'bg-secondary-container text-primary' : 'bg-surface-container-high text-on-surface'}">
+              ${sub.grade}
+            </span>
+          </td>
+          <td class="py-3 px-space-sm text-center font-semibold text-on-surface">${sub.points}</td>
+          <td class="py-3 px-space-sm text-center text-secondary">${sub.credits}</td>
+          <td class="py-3 px-space-md text-center">
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold ${isPassResult ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-surface-container text-primary'}">
+              ${sub.result}
+            </span>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      // 5. Update Table Footer
+      const footer = document.getElementById('tableFooter');
+      footer.innerHTML = `
+        <div class="flex items-center gap-space-md">
+          <span class="text-secondary font-medium">Semester Credits: <strong class="text-on-surface">${data.credits}</strong></span>
+          <span class="text-outline-variant">•</span>
+          <span class="text-secondary font-medium">Evaluation Total: <strong class="text-on-surface">${data.totalMarks}</strong></span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-secondary">Semester SGPA:</span>
+          <span class="px-2.5 py-0.5 rounded bg-primary-container text-white font-bold text-xs">SGPA: ${data.sgpa}</span>
+        </div>
+      `;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Role Enforcement Guard
+      const user = window.authService?.getCurrentUser();
+      if (!user) {
+        alert('Access Restricted: Please sign in with your student PIN to view Detailed Marks.');
+        window.location.href = '../index.html';
+        return;
+      } else if (user.role !== 'student') {
+        alert('Access Restricted: You are signed in as Faculty. Redirecting to Faculty Dashboard...');
+        window.location.href = 'faculty-dashboard.html';
+        return;
+      }
+
+      // 2. Populate Dynamic Student Information
+      const studentName = user.name || 'Alexander Vance';
+      const studentPin = user.pin || '22481A4201';
+      const studentDept = user.department || 'Computer Science & Engineering';
+
+      currentStudentPin = studentPin;
+
+      document.getElementById('studentHeaderName').textContent = studentName;
+      document.getElementById('studentHeaderPin').textContent = `PIN: ${studentPin}`;
+      document.getElementById('studentHeaderDept').textContent = `Dept: ${studentDept}`;
+      document.getElementById('footerStudentPin').textContent = `${studentName} (PIN: ${studentPin})`;
+
+      // Set avatar letter
+      const avatarEl = document.getElementById('studentAvatar');
+      if (avatarEl && studentName) {
+        avatarEl.innerHTML = `<span class="font-bold text-xs">${studentName.charAt(0)}</span>`;
+      }
+
+      // 3. Theme Toggle (Sync with localStorage)
+      const savedTheme = localStorage.getItem('ers_theme') || 'light';
+      if (savedTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+        document.body.classList.add('dark-mode');
+      }
+
+      // 4. Initial Render of Semester 5
+      switchSemester(5);
+
+      // Zero-Lag Live Sync across tabs or same tab
+      window.addEventListener('storage', (e) => {
+        if (e.key === 'ers_faculty_student_marks' || e.key === 'ers_faculty_students_list' || e.key === 'ers_last_sync_pulse') {
+          switchSemester(currentSem);
+        }
+      });
+      window.addEventListener('ers_data_sync', () => {
+        switchSemester(currentSem);
+      });
+
+      // 5. Logout Handler
+      const navSignOutBtn = document.getElementById('navSignOutBtn');
+      if (navSignOutBtn) {
+        navSignOutBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (confirm('Are you sure you want to sign out of the Student Academic Portal?')) {
+            window.authService.logout();
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="web_dashboard" name="shell-type"/>
+  <title>Smart College ERS - Faculty Dashboard</title>
+
+  <!-- Google Material Symbols & Inter Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+
+  <style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+    ::-webkit-scrollbar { display: none; }
+  </style>
+
+  <!-- Tailwind CSS & Theme Config -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-bright": "#faf8ff",
+            "tertiary": "#00246b",
+            "tertiary-fixed": "#dbe1ff",
+            "background": "#faf8ff",
+            "on-error-container": "#93000a",
+            "primary-fixed": "#dce1ff",
+            "outline-variant": "#c5c5d3",
+            "tertiary-container": "#00389a",
+            "tertiary-fixed-dim": "#b4c5ff",
+            "on-tertiary": "#ffffff",
+            "surface-variant": "#dae2fd",
+            "on-secondary-fixed": "#0d1c2e",
+            "on-primary": "#ffffff",
+            "surface": "#faf8ff",
+            "surface-dim": "#d2d9f4",
+            "on-background": "#131b2e",
+            "on-tertiary-fixed": "#00174b",
+            "inverse-on-surface": "#eef0ff",
+            "error": "#ba1a1a",
+            "on-primary-fixed-variant": "#264191",
+            "on-secondary-container": "#57657a",
+            "inverse-surface": "#283044",
+            "on-surface-variant": "#444651",
+            "surface-container-lowest": "#ffffff",
+            "inverse-primary": "#b6c4ff",
+            "surface-container-high": "#e2e7ff",
+            "surface-container-highest": "#dae2fd",
+            "on-primary-container": "#90a8ff",
+            "secondary-fixed": "#d5e3fc",
+            "primary-container": "#1e3a8a",
+            "on-error": "#ffffff",
+            "on-secondary-fixed-variant": "#3a485b",
+            "on-secondary": "#ffffff",
+            "on-tertiary-fixed-variant": "#003ea8",
+            "surface-tint": "#4059aa",
+            "on-surface": "#131b2e",
+            "surface-container": "#eaedff",
+            "secondary-fixed-dim": "#b9c7df",
+            "secondary-container": "#d5e3fc",
+            "on-primary-fixed": "#00164e",
+            "error-container": "#ffdad6",
+            "outline": "#757682",
+            "primary": "#00236f",
+            "surface-container-low": "#f2f3ff",
+            "on-tertiary-container": "#8da9ff",
+            "secondary": "#515f74",
+            "primary-fixed-dim": "#b6c4ff"
+          },
+          borderRadius: {
+            DEFAULT: "0.25rem",
+            lg: "0.5rem",
+            xl: "0.75rem",
+            full: "9999px"
+          },
+          spacing: {
+            "space-lg": "1.5rem",
+            "space-md": "1rem",
+            "space-xs": "0.25rem",
+            "space-xl": "2rem",
+            "space-sm": "0.5rem",
+            "margin-compact": "1rem",
+            margin: "2rem",
+            gutter: "1.5rem",
+            "gutter-dense": "1rem"
+          },
+          fontFamily: {
+            "body-sm": ["Inter"],
+            "label-sm": ["Inter"],
+            "headline-sm": ["Inter"],
+            display: ["Inter"],
+            "body-lg": ["Inter"],
+            "label-md": ["Inter"],
+            "headline-md": ["Inter"],
+            "body-md": ["Inter"],
+            "headline-lg": ["Inter"],
+            "tabular-data": ["Inter"]
+          },
+          fontSize: {
+            "body-sm": ["13px", { lineHeight: "18px", letterSpacing: "0em", fontWeight: "400" }],
+            "label-sm": ["11px", { lineHeight: "14px", letterSpacing: "0.04em", fontWeight: "600" }],
+            "headline-sm": ["16px", { lineHeight: "24px", letterSpacing: "0em", fontWeight: "600" }],
+            display: ["32px", { lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "700" }],
+            "body-lg": ["16px", { lineHeight: "24px", letterSpacing: "0em", fontWeight: "400" }],
+            "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "500" }],
+            "headline-md": ["20px", { lineHeight: "28px", letterSpacing: "-0.01em", fontWeight: "600" }],
+            "body-md": ["14px", { lineHeight: "20px", letterSpacing: "0em", fontWeight: "400" }],
+            "headline-lg": ["24px", { lineHeight: "32px", letterSpacing: "-0.015em", fontWeight: "600" }],
+            "tabular-data": ["13px", { lineHeight: "18px", letterSpacing: "0em", fontWeight: "400" }]
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body class="bg-background font-body-md text-on-surface antialiased">
+
+  <!-- ================= CONSISTENT SIDEBAR NAVIGATION ================= -->
+  <aside class="fixed left-0 top-0 h-screen w-60 bg-surface-container-lowest border-r border-outline-variant/40 z-50 flex flex-col justify-between select-none">
+    <div class="flex flex-col">
+      
+      <!-- Institutional Brand Header -->
+      <div class="h-16 px-space-md border-b border-outline-variant/30 flex items-center min-w-0">
+        <a href="home.html" class="flex items-center gap-space-sm min-w-0">
+          <div class="w-9 h-9 rounded bg-primary-container text-on-primary flex items-center justify-center shrink-0 shadow-sm">
+            <span class="material-symbols-outlined text-[20px]">school</span>
+          </div>
+          <div class="flex flex-col min-w-0">
+            <span class="font-headline-sm text-headline-sm leading-tight text-on-surface truncate">Smart College</span>
+            <span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary">Education Record System</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="p-space-md"></div>
+
+      <!-- Main Clean Navigation -->
+      <nav id="sidebarNav" class="px-space-sm space-y-space-xs">
+        
+        <!-- 1. Home Page -->
+        <a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-sm text-body-sm transition-colors" href="home.html">
+          <span class="material-symbols-outlined text-[18px]">home</span>
+          <span>Home</span>
+        </a>
+
+        <!-- 2. Faculty Dashboard (Active Page) -->
+        <a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-space-xs rounded transition-colors bg-secondary-container text-primary font-semibold" href="faculty-dashboard.html">
+          <span class="material-symbols-outlined text-[18px]">badge</span>
+          <span>Faculty Dashboard</span>
+        </a>
+
+        <!-- 3. Student Directory -->
+        <a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-sm text-body-sm transition-colors" href="faculty-students.html">
+          <span class="material-symbols-outlined text-[18px]">group</span>
+          <span>Students List</span>
+        </a>
+
+        <!-- 4. Circular Announcements -->
+        <a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-sm text-body-sm transition-colors" href="faculty-announcements.html">
+          <span class="material-symbols-outlined text-[18px]">campaign</span>
+          <span>Announcements</span>
+        </a>
+
+        <!-- 5. About ERS -->
+        <a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-sm text-body-sm transition-colors" href="about.html">
+          <span class="material-symbols-outlined text-[18px]">info</span>
+          <span>About ERS</span>
+        </a>
+
+        <!-- 6. Sign Out -->
+        <a id="navSignOutBtn" class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-error hover:bg-error-container/40 transition-colors font-body-sm text-body-sm cursor-pointer" href="../index.html">
+          <span class="material-symbols-outlined text-[18px]">logout</span>
+          <span>Sign Out</span>
+        </a>
+
+      </nav>
+    </div>
+
+    <!-- Institutional Footer Compliance Strip -->
+    <div class="p-space-md border-t border-outline-variant/30 bg-surface-container-low">
+      <div class="flex items-center gap-space-xs mb-space-xs text-secondary">
+        <span class="material-symbols-outlined text-[14px]">verified_user</span>
+        <span class="font-label-sm text-label-sm font-semibold tracking-wide uppercase">FERPA Compliant</span>
+      </div>
+      <p class="font-label-sm text-label-sm text-on-surface-variant leading-tight">TLS 1.3 Secure • Faculty Node v4.2.1</p>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN CONTENT WRAPPER ================= -->
+  <div class="pl-60 min-h-screen flex flex-col bg-background">
+    
+    <!-- Top Bar Header -->
+    <header class="fixed top-0 left-60 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-md border-b border-outline-variant/40 z-40 px-space-lg flex items-center justify-between">
+      <div class="flex items-center gap-space-md text-on-surface-variant font-label-md text-label-md">
+        <span class="flex items-center gap-space-xs text-secondary font-medium">
+          <span class="material-symbols-outlined text-[16px]">calendar_today</span>
+          <span>Academic Session 2025–2026</span>
+        </span>
+        <span class="text-outline-variant">•</span>
+        <span class="text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded text-[11px] font-semibold">
+          Active Faculty Session
+        </span>
+      </div>
+
+      <!-- Faculty Info Pill & Quick Action in Header -->
+      <div class="flex items-center gap-space-md">
+        <a href="faculty-students.html" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary-container text-white text-xs font-semibold hover:bg-[#172554] transition-colors shadow-xs">
+          <span class="material-symbols-outlined text-[16px]">person_add</span>
+          <span>Add Student</span>
+        </a>
+
+        <div class="hidden md:flex items-center divide-x divide-outline-variant/40 bg-surface-container-low px-space-md py-1.5 rounded border border-outline-variant/40 font-tabular-data text-body-sm shadow-xs">
+          <div class="pr-space-md text-right">
+            <div id="facultyHeaderName" class="font-headline-sm text-body-sm text-on-surface font-semibold">Dr. Marcus Vance</div>
+            <div id="facultyHeaderId" class="font-label-sm text-label-sm text-secondary font-mono">Head of Department</div>
+          </div>
+          <div class="pl-space-md text-left">
+            <div class="font-label-md text-label-md text-on-surface">Dept: Computer Science &amp; Eng</div>
+            <div class="font-label-sm text-label-sm text-secondary">Academic Session 2025–26</div>
+          </div>
+        </div>
+
+        <div class="w-8 h-8 rounded-full bg-primary-container text-on-primary flex items-center justify-center shadow-xs font-semibold text-xs" id="facultyAvatar">
+          <span>M</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Body -->
+    <main class="relative pt-16 flex-1 w-full p-margin bg-background">
+      <div class="flex flex-col w-full space-y-space-lg max-w-7xl mx-auto">
+        
+        <!-- Welcome Banner -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-space-sm pt-2">
+          <div>
+            <h1 class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tight">
+              Welcome, <span id="welcomeFacultyName">Dr. Marcus Vance</span>
+            </h1>
+            <p class="font-body-sm text-body-sm text-secondary mt-0.5">
+              Department of Computer Science &amp; Engineering • Faculty Administration Console
+            </p>
+          </div>
+
+          <div class="flex items-center gap-2 self-start sm:self-auto">
+            <a href="faculty-students.html" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-primary-container text-white text-xs font-semibold hover:bg-[#172554] transition-colors shadow-xs">
+              <span class="material-symbols-outlined text-[16px]">group</span>
+              <span>Manage Student Roster</span>
+            </a>
+            <a href="faculty-announcements.html" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-surface-container-low text-primary border border-outline-variant/40 text-xs font-semibold hover:bg-surface-container transition-colors">
+              <span class="material-symbols-outlined text-[16px]">campaign</span>
+              <span>Post Announcement</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- ================= 4 CLEAN KPI OVERVIEW CARDS ================= -->
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+          
+          <!-- KPI 1: Enrolled Students -->
+          <div class="bg-surface-container-lowest rounded-xl p-5 shadow-sm border border-outline-variant/30 flex flex-col justify-between">
+            <div class="flex items-start justify-between">
+              <div>
+                <span class="font-label-sm text-[11px] uppercase tracking-wider text-secondary font-semibold">Enrolled Students</span>
+                <div id="kpiStudentsCount" class="font-display text-[32px] leading-none font-bold text-on-surface mt-1.5">6</div>
+              </div>
+              <div class="w-10 h-10 rounded-lg bg-surface-container-low text-primary flex items-center justify-center">
+                <span class="material-symbols-outlined text-[20px]">groups</span>
+              </div>
+            </div>
+            <div class="mt-3 pt-2 border-t border-outline-variant/20 flex items-center justify-between text-xs">
+              <span class="text-secondary">CSE • Section B</span>
+              <a href="faculty-students.html" class="text-primary font-semibold hover:underline">View Roster →</a>
+            </div>
+          </div>
+
+          <!-- KPI 2: Average Attendance -->
+          <div class="bg-surface-container-lowest rounded-xl p-5 shadow-sm border border-outline-variant/30 flex flex-col justify-between">
+            <div class="flex items-start justify-between">
+              <div>
+                <span class="font-label-sm text-[11px] uppercase tracking-wider text-secondary font-semibold">Cohort Attendance</span>
+                <div id="kpiAvgAttendance" class="font-display text-[32px] leading-none font-bold text-on-surface mt-1.5">86.2%</div>
+              </div>
+              <div class="w-10 h-10 rounded-lg bg-surface-container-low text-primary flex items-center justify-center">
+                <span class="material-symbols-outlined text-[20px]">event_available</span>
+              </div>
+            </div>
+            <div class="mt-3 pt-2 border-t border-outline-variant/20 flex items-center justify-between text-xs">
+              <span class="text-emerald-700 font-semibold flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                Quorum Compliant
+              </span>
+              <span class="text-secondary font-tabular-data">&gt;75% required</span>
+            </div>
+          </div>
+
+          <!-- KPI 3: Average CGPA -->
+          <div class="bg-surface-container-lowest rounded-xl p-5 shadow-sm border border-outline-variant/30 flex flex-col justify-between">
+            <div class="flex items-start justify-between">
+              <div>
+                <span class="font-label-sm text-[11px] uppercase tracking-wider text-secondary font-semibold">Batch Mean CGPA</span>
+                <div id="kpiAvgCgpa" class="font-display text-[32px] leading-none font-bold text-on-surface mt-1.5">8.70</div>
+              </div>
+              <div class="w-10 h-10 rounded-lg bg-surface-container-low text-primary flex items-center justify-center">
+                <span class="material-symbols-outlined text-[20px]">grade</span>
+              </div>
+            </div>
+            <div class="mt-3 pt-2 border-t border-outline-variant/20 flex items-center justify-between text-xs">
+              <span class="text-secondary">Scale of 10.0</span>
+              <span class="text-primary font-semibold">First Class Distinction</span>
+            </div>
+          </div>
+
+          <!-- KPI 4: Published Circulars -->
+          <div class="bg-surface-container-lowest rounded-xl p-5 shadow-sm border border-outline-variant/30 flex flex-col justify-between">
+            <div class="flex items-start justify-between">
+              <div>
+                <span class="font-label-sm text-[11px] uppercase tracking-wider text-secondary font-semibold">Active Circulars</span>
+                <div id="kpiAnnCount" class="font-display text-[32px] leading-none font-bold text-on-surface mt-1.5">4</div>
+              </div>
+              <div class="w-10 h-10 rounded-lg bg-surface-container-low text-primary flex items-center justify-center">
+                <span class="material-symbols-outlined text-[20px]">campaign</span>
+              </div>
+            </div>
+            <div class="mt-3 pt-2 border-t border-outline-variant/20 flex items-center justify-between text-xs">
+              <span class="text-secondary">Univ &amp; Dept Feeds</span>
+              <a href="faculty-announcements.html" class="text-primary font-semibold hover:underline">Manage →</a>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ================= MAIN TWO WORKSPACE MODULES ================= -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+          
+          <!-- Module 1: Student Roster & Marks Management (8 cols) -->
+          <div class="lg:col-span-8 bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/30 overflow-hidden flex flex-col">
+            <div class="p-space-md bg-surface-container-low border-b border-outline-variant/30 flex items-center justify-between flex-wrap gap-2">
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-[20px]">group</span>
+                <h2 class="font-headline-sm text-body-md text-on-surface font-semibold">
+                  Student Roll Numbers &amp; Academic Status
+                </h2>
+              </div>
+              <div class="flex items-center gap-2">
+                <a href="faculty-students.html" class="text-xs text-primary font-semibold hover:underline flex items-center gap-1">
+                  <span>View All Students</span>
+                  <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Student Snapshot Table -->
+            <div class="overflow-x-auto">
+              <table class="w-full text-left font-tabular-data text-body-sm">
+                <thead class="bg-surface-container-low font-label-sm text-[11px] uppercase tracking-wider text-secondary border-b border-outline-variant/30 select-none">
+                  <tr>
+                    <th class="py-2.5 px-4" scope="col">Roll Number</th>
+                    <th class="py-2.5 px-4" scope="col">Student Name</th>
+                    <th class="py-2.5 px-4 text-center" scope="col">Attendance</th>
+                    <th class="py-2.5 px-4 text-center" scope="col">CGPA</th>
+                    <th class="py-2.5 px-4 text-center" scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="dashboardStudentList" class="divide-y divide-outline-variant/20 text-on-surface">
+                  <!-- Dynamically populated -->
+                </tbody>
+              </table>
+            </div>
+
+            <div class="p-3 bg-surface-container-low border-t border-outline-variant/20 flex items-center justify-between text-xs">
+              <span class="text-secondary text-[11px]">Click on any student to add or edit marks and attendance.</span>
+              <a href="faculty-students.html" class="inline-flex items-center gap-1 font-semibold text-primary hover:underline">
+                <span class="material-symbols-outlined text-[14px]">person_add</span>
+                <span>+ Register New Roll Number</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Module 2: Recent Circular Announcements (4 cols) -->
+          <div class="lg:col-span-4 bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/30 overflow-hidden flex flex-col justify-between">
+            <div>
+              <div class="p-space-md bg-surface-container-low border-b border-outline-variant/30 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary text-[20px]">campaign</span>
+                  <h2 class="font-headline-sm text-body-md text-on-surface font-semibold">
+                    Circular Announcements
+                  </h2>
+                </div>
+                <a href="faculty-announcements.html" class="text-xs text-primary font-semibold hover:underline">
+                  + Post
+                </a>
+              </div>
+
+              <!-- List of Announcements -->
+              <div id="dashboardAnnList" class="p-space-sm divide-y divide-outline-variant/20">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
+            <div class="p-3 bg-surface-container-low border-t border-outline-variant/20 text-center">
+              <a href="faculty-announcements.html" class="text-xs text-primary font-semibold hover:underline inline-flex items-center gap-1">
+                <span>Open Announcement Desk</span>
+                <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </a>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- Clean Footer Note -->
+        <footer class="p-space-md bg-surface-container-low rounded-lg flex flex-wrap items-center justify-between gap-space-sm text-secondary font-body-sm text-xs border border-outline-variant/30">
+          <div class="flex items-center gap-space-xs">
+            <span class="material-symbols-outlined text-[16px] text-primary">policy</span>
+            <span>Faculty Console • Academic Session 2025–2026</span>
+          </div>
+          <div class="font-label-sm text-[11px] text-secondary">
+            Authorized HOD &amp; Faculty Access Only
+          </div>
+        </footer>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Supabase JS Client SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Scripts -->
+  <script src="../js/config.js"></script>
+  <script src="../js/supabaseClient.js"></script>
+  <script src="../js/facultyData.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Role Enforcement Guard
+      const user = window.authService?.getCurrentUser();
+      if (!user) {
+        alert('Access Restricted: Please sign in as Faculty.');
+        window.location.href = '../index.html';
+        return;
+      } else if (user.role !== 'faculty') {
+        alert('Access Restricted: You are signed in as Student. Redirecting to Student Dashboard...');
+        window.location.href = 'student-dashboard.html';
+        return;
+      }
+
+      // Populate header info
+      const facultyName = user.name || 'Dr. Marcus Vance';
+      document.getElementById('facultyHeaderName').textContent = facultyName;
+      document.getElementById('welcomeFacultyName').textContent = facultyName;
+      const avatarEl = document.getElementById('facultyAvatar');
+      if (avatarEl) avatarEl.innerHTML = `<span class="font-bold text-xs">${facultyName.charAt(0)}</span>`;
+
+      // Theme toggle
+      const savedTheme = localStorage.getItem('ers_theme') || 'light';
+      if (savedTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+        document.body.classList.add('dark-mode');
+      }
+
+      // Sign out handler
+      const navSignOutBtn = document.getElementById('navSignOutBtn');
+      if (navSignOutBtn) {
+        navSignOutBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (confirm('Are you sure you want to sign out?')) {
+            window.authService.logout();
+          }
+        });
+      }
+
+      // 2. Render KPI Metrics & Recent Lists
+      function renderFacultyDashboard() {
+        const students = window.facultyData.getStudents();
+        const announcements = window.facultyData.getAnnouncements();
+
+        document.getElementById('kpiStudentsCount').textContent = students.length;
+        document.getElementById('kpiAnnCount').textContent = announcements.length;
+
+        // Calculate Average Attendance & CGPA
+        if (students.length > 0) {
+          const totalAtt = students.reduce((acc, s) => acc + (s.attendance || 0), 0);
+          const totalCgpa = students.reduce((acc, s) => acc + (s.cgpa || 0), 0);
+          document.getElementById('kpiAvgAttendance').textContent = `${(totalAtt / students.length).toFixed(1)}%`;
+          document.getElementById('kpiAvgCgpa').textContent = (totalCgpa / students.length).toFixed(2);
+        }
+
+        // Render Student Snapshot Table (Top 5)
+        const studentTbody = document.getElementById('dashboardStudentList');
+        studentTbody.innerHTML = '';
+        students.slice(0, 5).forEach(s => {
+          const tr = document.createElement('tr');
+          tr.className = 'hover:bg-surface-container-low transition-colors cursor-pointer';
+          tr.onclick = () => {
+            window.location.href = `faculty-student-edit.html?pin=${encodeURIComponent(s.pin)}`;
+          };
+
+          const isQuorum = s.attendance >= 75.0;
+
+          tr.innerHTML = `
+            <td class="py-3 px-4 font-mono text-xs font-bold text-primary">${s.pin}</td>
+            <td class="py-3 px-4">
+              <div class="font-medium text-on-surface text-xs">${s.name}</div>
+              <div class="text-[11px] text-secondary">Sem ${s.semester} • ${s.section}</div>
+            </td>
+            <td class="py-3 px-4 text-center">
+              <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-bold ${isQuorum ? 'text-emerald-700 bg-emerald-50' : 'text-error bg-error-container'}">
+                ${s.attendance}%
+              </span>
+            </td>
+            <td class="py-3 px-4 text-center font-bold text-xs text-on-surface">
+              ${s.cgpa.toFixed(2)}
+            </td>
+            <td class="py-3 px-4 text-center">
+              <a href="faculty-student-edit.html?pin=${encodeURIComponent(s.pin)}" class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container text-primary hover:bg-primary hover:text-white transition-colors text-xs font-semibold" onclick="event.stopPropagation();">
+                <span class="material-symbols-outlined text-[13px]">edit_note</span>
+                <span>Marks &amp; Attd</span>
+              </a>
+            </td>
+          `;
+          studentTbody.appendChild(tr);
+        });
+
+        // Render Announcements List (Top 3)
+        const annContainer = document.getElementById('dashboardAnnList');
+        annContainer.innerHTML = '';
+        announcements.slice(0, 3).forEach(a => {
+          const isDept = a.category === 'Department Announcements';
+          const item = document.createElement('article');
+          item.className = 'p-3 hover:bg-surface-container-low rounded-lg transition-colors space-y-1';
+          item.innerHTML = `
+            <div class="flex items-center justify-between gap-2">
+              <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold ${isDept ? 'bg-secondary-container text-primary' : 'bg-surface-container-high text-on-surface'}">
+                ${a.category}
+              </span>
+              <span class="text-[10px] text-secondary">${a.date}</span>
+            </div>
+            <h4 class="font-semibold text-xs text-on-surface leading-tight">${a.title}</h4>
+            <p class="text-[11px] text-secondary line-clamp-2 leading-relaxed">${a.matter}</p>
+          `;
+          annContainer.appendChild(item);
+        });
+      }
+
+      // Initial Render & Live Supabase Sync
+      renderFacultyDashboard();
+      if (window.facultyData && window.facultyData.syncFromSupabase) {
+        window.facultyData.syncFromSupabase().then(() => renderFacultyDashboard());
+      }
+
+      // Zero-Lag Cross-Tab and Same-Tab Listeners
+      window.addEventListener('storage', (e) => {
+        if (e.key === 'ers_faculty_students_list' || e.key === 'ers_faculty_announcements_list' || e.key === 'ers_last_sync_pulse' || e.key === 'ers_faculty_student_marks') {
+          renderFacultyDashboard();
+        }
+      });
+      window.addEventListener('ers_data_sync', () => {
+        renderFacultyDashboard();
+      });
+    });
+  </script>
+</body>
+</html>

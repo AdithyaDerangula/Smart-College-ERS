@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="web_dashboard" name="shell-type"/>
+  <title>Smart College ERS - Record Marks &amp; Attendance</title>
+
+  <!-- Google Material Symbols & Inter Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+
+  <style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+    ::-webkit-scrollbar { display: none; }
+  </style>
+
+  <!-- Tailwind CSS & Theme Config -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-bright": "#faf8ff",
+            "tertiary": "#00246b",
+            "tertiary-fixed": "#dbe1ff",
+            "background": "#faf8ff",
+            "on-error-container": "#93000a",
+            "primary-fixed": "#dce1ff",
+            "outline-variant": "#c5c5d3",
+            "tertiary-container": "#00389a",
+            "tertiary-fixed-dim": "#b4c5ff",
+            "on-tertiary": "#ffffff",
+            "surface-variant": "#dae2fd",
+            "on-secondary-fixed": "#0d1c2e",
+            "on-primary": "#ffffff",
+            "surface": "#faf8ff",
+            "surface-dim": "#d2d9f4",
+            "on-background": "#131b2e",
+            "on-tertiary-fixed": "#00174b",
+            "inverse-on-surface": "#eef0ff",
+            "error": "#ba1a1a",
+            "on-primary-fixed-variant": "#264191",
+            "on-secondary-container": "#57657a",
+            "inverse-surface": "#283044",
+            "on-surface-variant": "#444651",
+            "surface-container-lowest": "#ffffff",
+            "inverse-primary": "#b6c4ff",
+            "surface-container-high": "#e2e7ff",
+            "surface-container-highest": "#dae2fd",
+            "on-primary-container": "#90a8ff",
+            "secondary-fixed": "#d5e3fc",
+            "primary-container": "#1e3a8a",
+            "on-error": "#ffffff",
+            "on-secondary-fixed-variant": "#3a485b",
+            "on-secondary": "#ffffff",
+            "on-tertiary-fixed-variant": "#003ea8",
+            "surface-tint": "#4059aa",
+            "on-surface": "#131b2e",
+            "surface-container": "#eaedff",
+            "secondary-fixed-dim": "#b9c7df",
+            "secondary-container": "#d5e3fc",
+            "on-primary-fixed": "#00164e",
+            "error-container": "#ffdad6",
+            "outline": "#757682",
+            "primary": "#00236f",
+            "surface-container-low": "#f2f3ff",
+            "on-tertiary-container": "#8da9ff",
+            "secondary": "#515f74",
+            "primary-fixed-dim": "#b6c4ff"
+          },
+          borderRadius: {
+            DEFAULT: "0.25rem",
+            lg: "0.5rem",
+            xl: "0.75rem",
+            full: "9999px"
+          },
+          spacing: {
+            "space-lg": "1.5rem",
+            "space-md": "1rem",
+            "space-xs": "0.25rem",
+            "space-xl": "2rem",
+            "space-sm": "0.5rem",
+            "margin-compact": "1rem",
+            margin: "2rem",
+            gutter: "1.5rem",
+            "gutter-dense": "1rem"
+          },
+          fontFamily: {
+            "body-sm": ["Inter"],
+            "label-sm": ["Inter"],
+            "headline-sm": ["Inter"],
+            display: ["Inter"],
+            "body-lg": ["Inter"],
+            "label-md": ["Inter"],
+            "headline-md": ["Inter"],
+            "body-md": ["Inter"],
+            "headline-lg": ["Inter"],
+            "tabular-data": ["Inter"]
+          },
+          fontSize: {
+            "body-sm": ["13px", { lineHeight: "18px", letterSpacing: "0em", fontWeight: "400" }],
+            "label-sm": ["11px", { lineHeight: "14px", letterSpacing: "0.04em", fontWeight: "600" }],
+            "headline-sm": ["16px", { lineHeight: "24px", letterSpacing: "0em", fontWeight: "600" }],
+            display: ["32px", { lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "700" }],
+            "body-lg": ["16px", { lineHeight: "24px", letterSpacing: "0em", fontWeight: "400" }],
+            "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "500" }],
+            "headline-md": ["20px", { lineHeight: "28px", letterSpacing: "-0.01em", fontWeight: "600" }],
+            "body-md": ["14px", { lineHeight: "20px", letterSpacing: "0em", fontWeight: "400" }],
+            "headline-lg": ["24px", { lineHeight: "32px", letterSpacing: "-0.015em", fontWeight: "600" }],
+            "tabular-data": ["13px", { lineHeight: "18px", letterSpacing: "0em", fontWeight: "400" }]
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body class="bg-background font-body-md text-on-surface antialiased">
+
+  <!-- ================= CONSISTENT SIDEBAR NAVIGATION ================= -->
+  <aside class="fixed left-0 top-0 h-screen w-60 bg-surface-container-lowest border-r border-outline-variant/40 z-50 flex flex-col justify-between select-none">
+    <div class="flex flex-col">
+      
+      <!-- Institutional Brand Header -->
+      <div class="h-16 px-space-md border-b border-outline-variant/30 flex items-center min-w-0">
+        <a href="home.html" class="flex items-center gap-space-sm min-w-0">
+          <div class="w-9 h-9 rounded bg-primary-container text-on-primary flex items-center justify-center shrink-0 shadow-sm">
+            <span class="material-symbols-outlined text-[20px]">school</span>
+          </div>
+          <div class="flex flex-col min-w-0">
+            <span class="font-headline-sm text-headline-sm leading-tight text-on-surface truncate">Smart College</span>
+            <span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary">Education Record System</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="p-space-md"></div>
+
+      <!-- Main Clean Navigation -->
+      <nav id="sidebarNav" class="px-space-sm space-y-space-xs">
+        
+        <!-- 1. Home Page -->
+        <a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-sm text-body-sm transition-colors" href="home.html">
+          <span class="material-symbols-outlined text-[18px]">home</span>
+          <span>Home</span>
+        </a>
+
+        <!-- 2. Faculty Dashboard -->
+        <a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-sm text-body-sm transition-colors" href="faculty-dashboard.html">
+          <span class="material-symbols-outlined text-[18px]">badge</span>
+          <span>Faculty Dashboard</span>
+        </a>
+
+        <!-- 3. Student Directory (Active) -->
+        <a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-space-xs rounded transition-colors bg-secondary-container text-primary font-semibold" href="faculty-students.html">
+          <span class="material-symbols-outlined text-[18px]">group</span>
+          <span>Students List</span>
+        </a>
+
+        <!-- 4. Circular Announcements -->
+        <a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-sm text-body-sm transition-colors" href="faculty-announcements.html">
+          <span class="material-symbols-outlined text-[18px]">campaign</span>
+          <span>Announcements</span>
+        </a>
+
+        <!-- 5. About ERS -->
+        <a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-sm text-body-sm transition-colors" href="about.html">
+          <span class="material-symbols-outlined text-[18px]">info</span>
+          <span>About ERS</span>
+        </a>
+
+        <!-- 6. Sign Out -->
+        <a id="navSignOutBtn" class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-error hover:bg-error-container/40 transition-colors font-body-sm text-body-sm cursor-pointer" href="../index.html">
+          <span class="material-symbols-outlined text-[18px]">logout</span>
+          <span>Sign Out</span>
+        </a>
+
+      </nav>
+    </div>
+
+    <!-- Institutional Footer Compliance Strip -->
+    <div class="p-space-md border-t border-outline-variant/30 bg-surface-container-low">
+      <div class="flex items-center gap-space-xs mb-space-xs text-secondary">
+        <span class="material-symbols-outlined text-[14px]">verified_user</span>
+        <span class="font-label-sm text-label-sm font-semibold tracking-wide uppercase">FERPA Compliant</span>
+      </div>
+      <p class="font-label-sm text-label-sm text-on-surface-variant leading-tight">TLS 1.3 Secure • Faculty Node v4.2.1</p>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN CONTENT WRAPPER ================= -->
+  <div class="pl-60 min-h-screen flex flex-col bg-background">
+    
+    <!-- Top Bar Header -->
+    <header class="fixed top-0 left-60 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-md border-b border-outline-variant/40 z-40 px-space-lg flex items-center justify-between">
+      <div class="flex items-center gap-space-sm text-on-surface-variant font-label-md text-label-md">
+        <a href="faculty-students.html" class="flex items-center gap-1 text-primary hover:underline font-medium">
+          <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+          <span>Students List</span>
+        </a>
+        <span class="text-outline-variant">/</span>
+        <span class="text-on-surface font-semibold">Record Marks &amp; Attendance</span>
+      </div>
+
+      <!-- Header Info -->
+      <div class="flex items-center gap-space-md">
+        <div class="hidden md:flex items-center divide-x divide-outline-variant/40 bg-surface-container-low px-space-md py-1.5 rounded border border-outline-variant/40 font-tabular-data text-body-sm shadow-xs">
+          <div class="pr-space-md text-right">
+            <div id="facultyHeaderName" class="font-headline-sm text-body-sm text-on-surface font-semibold">Dr. Marcus Vance</div>
+            <div class="font-label-sm text-label-sm text-secondary">Faculty Evaluation Mode</div>
+          </div>
+          <div class="pl-space-md text-left">
+            <div class="font-label-md text-label-md text-on-surface">Computer Science &amp; Eng</div>
+            <div class="font-label-sm text-label-sm text-secondary">Grading Privileges Active</div>
+          </div>
+        </div>
+
+        <div class="w-8 h-8 rounded-full bg-primary-container text-on-primary flex items-center justify-center shadow-xs font-semibold text-xs">
+          <span>M</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Body -->
+    <main class="relative pt-16 flex-1 w-full p-margin bg-background">
+      <div class="flex flex-col w-full space-y-space-lg max-w-7xl mx-auto">
+        
+        <!-- Navigation & Breadcrumb Row -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-space-sm pt-2">
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <a href="faculty-students.html" class="inline-flex items-center gap-1 text-xs text-primary hover:underline font-semibold">
+                <span class="material-symbols-outlined text-[14px]">arrow_back</span>
+                Back to Student Directory
+              </a>
+              <span class="text-outline-variant">•</span>
+              <span class="text-xs text-secondary">Academic Record Entry</span>
+            </div>
+            <h1 class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tight">
+              Subject Marks &amp; Attendance Evaluator
+            </h1>
+            <p class="font-body-sm text-body-sm text-secondary mt-0.5">
+              Enter and update attendance records and assessment marks for each subject and semester.
+            </p>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <a href="faculty-students.html" class="px-3.5 py-2 rounded-lg bg-surface-container-low hover:bg-surface-container border border-outline-variant/40 text-on-surface text-xs font-semibold transition-colors">
+              Cancel
+            </a>
+            <button id="saveBtnTop" type="button" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary-container text-white text-xs font-semibold hover:bg-[#172554] transition-colors shadow-xs">
+              <span class="material-symbols-outlined text-[16px]">save</span>
+              <span>Save Changes</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ================= STUDENT PROFILE SUMMARY CARD ================= -->
+        <section class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm border border-outline-variant/30">
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-space-md divide-y md:divide-y-0 md:divide-x divide-outline-variant/30">
+            
+            <!-- Student Bio -->
+            <div class="flex flex-col justify-center">
+              <span class="font-label-sm text-[11px] uppercase tracking-wider text-secondary font-semibold">Student Information</span>
+              <div class="flex items-center gap-2.5 mt-1.5">
+                <div class="w-10 h-10 rounded-full bg-secondary-container text-primary flex items-center justify-center font-bold text-sm" id="badgeAvatar">
+                  AV
+                </div>
+                <div>
+                  <h3 id="displayStudentName" class="font-headline-sm text-body-md font-bold text-on-surface">Alexander Vance</h3>
+                  <p id="displayStudentEmail" class="text-xs text-secondary">student.vance@college.edu</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Roll Number / PIN -->
+            <div class="flex flex-col justify-center md:pl-space-md pt-space-sm md:pt-0">
+              <span class="font-label-sm text-[11px] uppercase tracking-wider text-secondary font-semibold">Roll Number / PIN</span>
+              <div class="flex items-baseline gap-2 mt-1">
+                <span id="displayStudentPin" class="font-mono text-xl font-bold text-primary">22481A4201</span>
+              </div>
+              <span id="displayStudentDept" class="text-xs text-secondary mt-0.5">CSE • Section B</span>
+            </div>
+
+            <!-- Current Attendance Status -->
+            <div class="flex flex-col justify-center md:pl-space-md pt-space-sm md:pt-0">
+              <span class="font-label-sm text-[11px] uppercase tracking-wider text-secondary font-semibold">Overall Attendance</span>
+              <div class="flex items-baseline gap-2 mt-1">
+                <span id="displayAttendance" class="font-display text-[28px] leading-none font-bold text-on-surface">86.5%</span>
+                <span id="displayQuorumTag" class="text-xs text-emerald-700 font-semibold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Quorum Met</span>
+              </div>
+              <span class="text-[11px] text-secondary mt-1">Statutory minimum: 75.0%</span>
+            </div>
+
+            <!-- Current CGPA -->
+            <div class="flex flex-col justify-center md:pl-space-md pt-space-sm md:pt-0">
+              <span class="font-label-sm text-[11px] uppercase tracking-wider text-secondary font-semibold">Cumulative CGPA</span>
+              <div class="flex items-baseline gap-2 mt-1">
+                <span id="displayCgpa" class="font-display text-[28px] leading-none font-bold text-on-surface">8.92</span>
+                <span class="text-xs text-secondary">/ 10.0</span>
+              </div>
+              <span class="text-[11px] text-secondary mt-1">First Class with Distinction</span>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ================= SEMESTER SELECTION TABS ================= -->
+        <section class="space-y-space-md">
+          <div class="flex items-center justify-between flex-wrap gap-2 border-b border-outline-variant/30 pb-2">
+            <div class="flex items-center gap-1.5 overflow-x-auto py-1">
+              <span class="text-xs font-semibold text-secondary mr-2 uppercase tracking-wider text-[11px]">Select Semester:</span>
+              <button onclick="switchSemesterTab(1)" id="semBtn-1" class="sem-btn px-3.5 py-1.5 rounded-lg text-xs font-medium text-secondary hover:bg-surface-container transition-colors">
+                Sem 1
+              </button>
+              <button onclick="switchSemesterTab(2)" id="semBtn-2" class="sem-btn px-3.5 py-1.5 rounded-lg text-xs font-medium text-secondary hover:bg-surface-container transition-colors">
+                Sem 2
+              </button>
+              <button onclick="switchSemesterTab(3)" id="semBtn-3" class="sem-btn px-3.5 py-1.5 rounded-lg text-xs font-medium text-secondary hover:bg-surface-container transition-colors">
+                Sem 3
+              </button>
+              <button onclick="switchSemesterTab(4)" id="semBtn-4" class="sem-btn px-3.5 py-1.5 rounded-lg text-xs font-medium text-secondary hover:bg-surface-container transition-colors">
+                Sem 4
+              </button>
+              <button onclick="switchSemesterTab(5)" id="semBtn-5" class="sem-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-primary-container text-white shadow-xs transition-colors">
+                Sem 5 (Active)
+              </button>
+              <button onclick="switchSemesterTab(6)" id="semBtn-6" class="sem-btn px-3.5 py-1.5 rounded-lg text-xs font-medium text-secondary hover:bg-surface-container transition-colors">
+                Sem 6
+              </button>
+            </div>
+
+            <div class="text-xs text-secondary font-medium">
+              Editing records for <span id="activeSemBadge" class="font-bold text-on-surface">Semester 5</span>
+            </div>
+          </div>
+
+          <!-- ================= SUBJECT-WISE EDITABLE TABLE ================= -->
+          <div class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/30 overflow-hidden">
+            <div class="p-space-md bg-surface-container-low flex flex-wrap items-center justify-between gap-space-sm border-b border-outline-variant/30">
+              <div>
+                <h3 id="tableSemTitle" class="font-headline-sm text-body-md text-on-surface font-semibold">
+                  Semester 5 - Subject Evaluation &amp; Attendance Form
+                </h3>
+                <p class="font-label-sm text-[11px] text-secondary">
+                  Update attended classes, total classes, internal test scores (max 25), and university end semester exam (max 100).
+                </p>
+              </div>
+              <button id="addSubjectRowBtn" type="button" class="inline-flex items-center gap-1 px-3 py-1.5 rounded bg-surface-container hover:bg-surface-container-high border border-outline-variant/40 text-xs font-semibold text-primary transition-colors">
+                <span class="material-symbols-outlined text-[15px]">add</span>
+                <span>+ Add Subject</span>
+              </button>
+            </div>
+
+            <!-- Editable Table -->
+            <div class="overflow-x-auto">
+              <table class="w-full text-left font-tabular-data text-body-sm">
+                <thead class="bg-surface-container-low font-label-sm text-[11px] uppercase tracking-wider text-secondary border-b border-outline-variant/30 select-none">
+                  <tr>
+                    <th class="py-3 px-space-md w-28" scope="col">Code</th>
+                    <th class="py-3 px-space-md" scope="col">Subject Title</th>
+                    <th class="py-3 px-space-sm w-28 text-center" scope="col">Attended / Total</th>
+                    <th class="py-3 px-space-sm w-24 text-center" scope="col">Attd %</th>
+                    <th class="py-3 px-space-sm w-24 text-right" scope="col">UT 1 (25)</th>
+                    <th class="py-3 px-space-sm w-24 text-right" scope="col">UT 2 (25)</th>
+                    <th class="py-3 px-space-sm w-24 text-right" scope="col">Lab/Assign (25)</th>
+                    <th class="py-3 px-space-sm w-24 text-right" scope="col">End Sem (100)</th>
+                    <th class="py-3 px-space-sm w-20 text-center" scope="col">Grade</th>
+                    <th class="py-3 px-space-sm w-12 text-center" scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody id="editableTableBody" class="divide-y divide-outline-variant/20 text-on-surface">
+                  <!-- Dynamically populated rows with inputs -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Table Action Footer -->
+            <div class="p-space-md bg-surface-container-low flex flex-wrap items-center justify-between gap-space-sm text-xs border-t border-outline-variant/30">
+              <div class="text-secondary">
+                Calculations update in real-time. Click <strong>Save Changes</strong> to store records.
+              </div>
+              <div class="flex items-center gap-2">
+                <button id="saveBtnBottom" type="button" class="inline-flex items-center gap-1.5 px-5 py-2 rounded-lg bg-primary-container text-white text-xs font-semibold hover:bg-[#172554] transition-colors shadow-xs">
+                  <span class="material-symbols-outlined text-[16px]">save</span>
+                  <span>Save Changes</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Supabase JS Client SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Scripts -->
+  <script src="../js/config.js"></script>
+  <script src="../js/supabaseClient.js"></script>
+  <script src="../js/facultyData.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Role Enforcement Guard (Faculty Only)
+      const user = window.authService?.getCurrentUser();
+      if (!user) {
+        alert('Access Restricted: Please sign in as Faculty.');
+        window.location.href = '../index.html';
+        return;
+      } else if (user.role !== 'faculty') {
+        alert('Access Restricted: You are signed in as Student.');
+        window.location.href = 'student-dashboard.html';
+        return;
+      }
+
+      // Populate faculty header
+      const facultyName = user.name || 'Dr. Marcus Vance';
+      document.getElementById('facultyHeaderName').textContent = facultyName;
+
+      // Theme toggle
+      const savedTheme = localStorage.getItem('ers_theme') || 'light';
+      if (savedTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+        document.body.classList.add('dark-mode');
+      }
+
+      // Sign out handler
+      const navSignOutBtn = document.getElementById('navSignOutBtn');
+      if (navSignOutBtn) {
+        navSignOutBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (confirm('Are you sure you want to sign out?')) {
+            window.authService.logout();
+          }
+        });
+      }
+
+      // 2. Identify Student via URL params
+      const urlParams = new URLSearchParams(window.location.search);
+      const studentPin = urlParams.get('pin') || '22481A4201';
+
+      let student = window.facultyData.getStudentByPin(studentPin);
+      if (!student) {
+        // Fallback to first student
+        const allStudents = window.facultyData.getStudents();
+        student = allStudents[0] || {
+          pin: "22481A4201",
+          name: "Alexander Vance",
+          department: "Computer Science & Engineering",
+          semester: 5,
+          section: "Section B",
+          email: "student.vance@college.edu",
+          attendance: 86.5,
+          cgpa: 8.92
+        };
+      }
+
+      // Populate Student Profile Card
+      document.getElementById('displayStudentName').textContent = student.name;
+      document.getElementById('displayStudentPin').textContent = student.pin;
+      document.getElementById('displayStudentEmail').textContent = student.email;
+      document.getElementById('displayStudentDept').textContent = `${student.department} • Sem ${student.semester} (${student.section})`;
+      document.getElementById('badgeAvatar').textContent = student.name.charAt(0);
+      
+      function updateAttendanceHeader() {
+        const attVal = student.attendance;
+        document.getElementById('displayAttendance').textContent = `${attVal}%`;
+        const quorumTag = document.getElementById('displayQuorumTag');
+        if (attVal >= 75.0) {
+          quorumTag.textContent = 'Quorum Met';
+          quorumTag.className = 'text-xs text-emerald-700 font-semibold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200';
+        } else {
+          quorumTag.textContent = 'Below 75%';
+          quorumTag.className = 'text-xs text-error font-semibold bg-error-container px-2 py-0.5 rounded border border-error/30';
+        }
+      }
+      updateAttendanceHeader();
+      document.getElementById('displayCgpa').textContent = student.cgpa.toFixed(2);
+
+      // 3. Semester Switching & Table Population
+      let currentSemester = student.semester || 5;
+      let currentSubjects = [];
+
+      window.switchSemesterTab = function(semNumber) {
+        currentSemester = semNumber;
+
+        document.querySelectorAll('.sem-btn').forEach(btn => {
+          btn.classList.remove('bg-primary-container', 'text-white', 'shadow-xs');
+          btn.classList.add('text-secondary', 'hover:bg-surface-container');
+        });
+        const activeBtn = document.getElementById(`semBtn-${semNumber}`);
+        if (activeBtn) {
+          activeBtn.classList.remove('text-secondary', 'hover:bg-surface-container');
+          activeBtn.classList.add('bg-primary-container', 'text-white', 'shadow-xs');
+        }
+
+        document.getElementById('activeSemBadge').textContent = `Semester ${semNumber}`;
+        document.getElementById('tableSemTitle').textContent = `Semester ${semNumber} - Subject Evaluation & Attendance Form`;
+
+        currentSubjects = window.facultyData.getStudentMarks(student.pin, semNumber);
+        renderEditableRows();
+      };
+
+      function calculateGrade(totalPercent) {
+        if (totalPercent >= 90) return { grade: 'O', pts: 10 };
+        if (totalPercent >= 80) return { grade: 'A+', pts: 9 };
+        if (totalPercent >= 70) return { grade: 'A', pts: 8 };
+        if (totalPercent >= 60) return { grade: 'B+', pts: 7 };
+        if (totalPercent >= 50) return { grade: 'B', pts: 6 };
+        if (totalPercent >= 40) return { grade: 'C', pts: 5 };
+        return { grade: 'F', pts: 0 };
+      }
+
+      function renderEditableRows() {
+        const tbody = document.getElementById('editableTableBody');
+        tbody.innerHTML = '';
+
+        currentSubjects.forEach((sub, idx) => {
+          const tr = document.createElement('tr');
+          tr.className = 'hover:bg-surface-container-low transition-colors';
+
+          const attended = parseFloat(sub.attendedClasses) || 0;
+          const total = parseFloat(sub.totalClasses) || 45;
+          const attPercent = total > 0 ? ((attended / total) * 100).toFixed(1) : 0;
+          const isQuorum = attPercent >= 75.0;
+
+          const ut1 = parseFloat(sub.ut1) || 0;
+          const ut2 = parseFloat(sub.ut2) || 0;
+          const lab = parseFloat(sub.lab) || 0;
+          const end = parseFloat(sub.end) || 0;
+          // Weighted total: internal avg (25) + lab (25) + end (50% or 100 scaled)
+          const totalScore = Math.min(100, Math.round(((ut1 + ut2) / 2) + (lab * 0.4) + (end * 0.65)));
+          const gradeInfo = calculateGrade(totalScore);
+
+          tr.innerHTML = `
+            <td class="py-2.5 px-space-md">
+              <input type="text" value="${sub.code || ''}" class="w-24 px-2 py-1 text-xs font-mono font-bold text-primary bg-surface-container-low border border-outline-variant/30 rounded focus:bg-surface-container-lowest focus:border-primary focus:outline-none" onchange="updateRowField(${idx}, 'code', this.value)">
+            </td>
+            <td class="py-2.5 px-space-md">
+              <input type="text" value="${sub.title || ''}" class="w-full min-w-[200px] px-2 py-1 text-xs font-medium text-on-surface bg-surface-container-low border border-outline-variant/30 rounded focus:bg-surface-container-lowest focus:border-primary focus:outline-none" onchange="updateRowField(${idx}, 'title', this.value)">
+            </td>
+            <td class="py-2.5 px-space-sm text-center">
+              <div class="flex items-center justify-center gap-1">
+                <input type="number" min="0" max="${total}" value="${attended}" class="w-12 px-1.5 py-1 text-xs text-center font-bold text-on-surface bg-surface-container-low border border-outline-variant/30 rounded focus:bg-surface-container-lowest focus:border-primary focus:outline-none" oninput="updateAttendanceField(${idx}, 'attended', this.value)">
+                <span class="text-secondary text-xs">/</span>
+                <input type="number" min="1" value="${total}" class="w-12 px-1.5 py-1 text-xs text-center text-secondary bg-surface-container-low border border-outline-variant/30 rounded focus:bg-surface-container-lowest focus:border-primary focus:outline-none" oninput="updateAttendanceField(${idx}, 'total', this.value)">
+              </div>
+            </td>
+            <td class="py-2.5 px-space-sm text-center">
+              <span id="attPercentBadge-${idx}" class="inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-bold ${isQuorum ? 'text-emerald-700 bg-emerald-50' : 'text-error bg-error-container'}">
+                ${attPercent}%
+              </span>
+            </td>
+            <td class="py-2.5 px-space-sm text-right">
+              <input type="number" step="0.5" min="0" max="25" value="${ut1}" class="w-16 px-1.5 py-1 text-xs text-right font-semibold text-on-surface bg-surface-container-low border border-outline-variant/30 rounded focus:bg-surface-container-lowest focus:border-primary focus:outline-none" oninput="updateScoreField(${idx}, 'ut1', this.value)">
+            </td>
+            <td class="py-2.5 px-space-sm text-right">
+              <input type="number" step="0.5" min="0" max="25" value="${ut2}" class="w-16 px-1.5 py-1 text-xs text-right font-semibold text-on-surface bg-surface-container-low border border-outline-variant/30 rounded focus:bg-surface-container-lowest focus:border-primary focus:outline-none" oninput="updateScoreField(${idx}, 'ut2', this.value)">
+            </td>
+            <td class="py-2.5 px-space-sm text-right">
+              <input type="number" step="0.5" min="0" max="25" value="${lab}" class="w-16 px-1.5 py-1 text-xs text-right font-semibold text-on-surface bg-surface-container-low border border-outline-variant/30 rounded focus:bg-surface-container-lowest focus:border-primary focus:outline-none" oninput="updateScoreField(${idx}, 'lab', this.value)">
+            </td>
+            <td class="py-2.5 px-space-sm text-right">
+              <input type="number" step="0.5" min="0" max="100" value="${end}" class="w-16 px-1.5 py-1 text-xs text-right font-bold text-primary bg-surface-container-low border border-outline-variant/30 rounded focus:bg-surface-container-lowest focus:border-primary focus:outline-none" oninput="updateScoreField(${idx}, 'end', this.value)">
+            </td>
+            <td class="py-2.5 px-space-sm text-center">
+              <span id="gradeBadge-${idx}" class="inline-flex items-center justify-center w-7 h-6 rounded text-xs font-bold bg-secondary-container text-primary">
+                ${gradeInfo.grade}
+              </span>
+            </td>
+            <td class="py-2.5 px-space-sm text-center">
+              <button type="button" class="text-secondary hover:text-error p-1 rounded transition-colors" title="Remove Subject" onclick="removeSubjectRow(${idx})">
+                <span class="material-symbols-outlined text-[16px]">delete</span>
+              </button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+
+      window.updateRowField = function(idx, field, val) {
+        if (currentSubjects[idx]) {
+          currentSubjects[idx][field] = val;
+        }
+      };
+
+      window.updateAttendanceField = function(idx, field, val) {
+        if (!currentSubjects[idx]) return;
+        if (field === 'attended') currentSubjects[idx].attendedClasses = parseFloat(val) || 0;
+        if (field === 'total') currentSubjects[idx].totalClasses = parseFloat(val) || 1;
+
+        const attended = parseFloat(currentSubjects[idx].attendedClasses) || 0;
+        const total = parseFloat(currentSubjects[idx].totalClasses) || 1;
+        const percent = total > 0 ? ((attended / total) * 100).toFixed(1) : 0;
+        const badge = document.getElementById(`attPercentBadge-${idx}`);
+        if (badge) {
+          badge.textContent = `${percent}%`;
+          badge.className = `inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-bold ${percent >= 75 ? 'text-emerald-700 bg-emerald-50' : 'text-error bg-error-container'}`;
+        }
+      };
+
+      window.updateScoreField = function(idx, field, val) {
+        if (!currentSubjects[idx]) return;
+        currentSubjects[idx][field] = parseFloat(val) || 0;
+
+        const sub = currentSubjects[idx];
+        const ut1 = parseFloat(sub.ut1) || 0;
+        const ut2 = parseFloat(sub.ut2) || 0;
+        const lab = parseFloat(sub.lab) || 0;
+        const end = parseFloat(sub.end) || 0;
+        const totalScore = Math.min(100, Math.round(((ut1 + ut2) / 2) + (lab * 0.4) + (end * 0.65)));
+        const gradeInfo = calculateGrade(totalScore);
+
+        const badge = document.getElementById(`gradeBadge-${idx}`);
+        if (badge) badge.textContent = gradeInfo.grade;
+      };
+
+      window.removeSubjectRow = function(idx) {
+        if (confirm('Are you sure you want to remove this subject?')) {
+          currentSubjects.splice(idx, 1);
+          renderEditableRows();
+        }
+      };
+
+      document.getElementById('addSubjectRowBtn').addEventListener('click', () => {
+        const nextNum = currentSubjects.length + 1;
+        currentSubjects.push({
+          code: `CS${currentSemester}0${nextNum}`,
+          title: "New Elective Course",
+          totalClasses: 45,
+          attendedClasses: 38,
+          ut1: 22,
+          ut2: 21,
+          lab: 23,
+          end: 85
+        });
+        renderEditableRows();
+      });
+
+      // Save Records to Live Supabase
+      async function saveRecords() {
+        const saveBtnTop = document.getElementById('saveBtnTop');
+        const saveBtnBottom = document.getElementById('saveBtnBottom');
+        if (saveBtnTop) saveBtnTop.textContent = 'Saving to DB...';
+        if (saveBtnBottom) saveBtnBottom.textContent = 'Saving to DB...';
+
+        try {
+          await window.facultyData.saveStudentMarks(student.pin, currentSemester, currentSubjects);
+          student = window.facultyData.getStudentByPin(student.pin);
+          updateAttendanceHeader();
+          alert(`Academic marks and attendance for ${student.name} (${student.pin}) - Semester ${currentSemester} saved successfully to database.`);
+        } catch (err) {
+          console.error("Save marks error:", err);
+          alert('An error occurred while saving marks to the database.');
+        } finally {
+          if (saveBtnTop) saveBtnTop.innerHTML = '<span class="material-symbols-outlined text-[14px]">save</span><span>Save Academic Changes</span>';
+          if (saveBtnBottom) saveBtnBottom.innerHTML = '<span class="material-symbols-outlined text-[14px]">save</span><span>Save Academic Changes</span>';
+        }
+      }
+
+      document.getElementById('saveBtnTop').addEventListener('click', saveRecords);
+      document.getElementById('saveBtnBottom').addEventListener('click', saveRecords);
+
+      // Initial Render
+      switchSemesterTab(currentSemester);
+    });
+  </script>
+</body>
+</html>

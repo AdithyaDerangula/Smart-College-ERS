@@ -1,0 +1,115 @@
+/* Smart College ERS - Custom Global Styles */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary-navy: #1E3A8A;
+  --primary-hover: #172554;
+  --bg-main: #F8FAFC;
+  --text-main: #0F172A;
+  --card-bg: #FFFFFF;
+  --border-color: #E2E8F0;
+  --muted-text: #64748B;
+}
+
+body.dark-mode {
+  --bg-main: #0F172A;
+  --text-main: #F8FAFC;
+  --card-bg: #1E293B;
+  --border-color: #334155;
+  --muted-text: #94A3B8;
+  background-color: var(--bg-main) !important;
+  color: var(--text-main) !important;
+}
+
+body.dark-mode main > div {
+  background-color: var(--card-bg) !important;
+  border-color: var(--border-color) !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode input {
+  background-color: #0F172A !important;
+  border-color: #334155 !important;
+  color: #F8FAFC !important;
+}
+
+body.dark-mode #menuDropdown {
+  background-color: #1E293B !important;
+  border-color: #334155 !important;
+  color: #E2E8F0 !important;
+}
+
+body.dark-mode #menuDropdown button:hover,
+body.dark-mode #menuDropdown a:hover {
+  background-color: #334155 !important;
+  color: #FFFFFF !important;
+}
+
+/* Toast Notification Styles */
+#toastContainer {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  pointer-events: none;
+}
+
+.ers-toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1.25rem;
+  border-radius: 0.65rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  transform: translateY(-10px);
+  opacity: 0;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ers-toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.ers-toast-success {
+  background-color: #065F46;
+  color: #ECFDF5;
+  border: 1px solid #059669;
+}
+
+.ers-toast-error {
+  background-color: #991B1B;
+  color: #FEF2F2;
+  border: 1px solid #DC2626;
+}
+
+.ers-toast-info {
+  background-color: #1E3A8A;
+  color: #EFF6FF;
+  border: 1px solid #2563EB;
+}
+
+/* Spinner */
+.spinner {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+  border-top-color: #ffffff;
+  animation: spin 0.7s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

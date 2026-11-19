@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="web_dashboard" name="shell-type"/>
+  <title>About Smart College ERS - Institutional Architecture</title>
+
+  <!-- Google Material Symbols & Inter Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+
+  <style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+    ::-webkit-scrollbar { display: none; }
+  </style>
+
+  <!-- Tailwind CSS & Theme Config -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-bright": "#faf8ff",
+            "tertiary": "#00246b",
+            "tertiary-fixed": "#dbe1ff",
+            "background": "#faf8ff",
+            "on-error-container": "#93000a",
+            "primary-fixed": "#dce1ff",
+            "outline-variant": "#c5c5d3",
+            "tertiary-container": "#00389a",
+            "tertiary-fixed-dim": "#b4c5ff",
+            "on-tertiary": "#ffffff",
+            "surface-variant": "#dae2fd",
+            "on-secondary-fixed": "#0d1c2e",
+            "on-primary": "#ffffff",
+            "surface": "#faf8ff",
+            "surface-dim": "#d2d9f4",
+            "on-background": "#131b2e",
+            "on-tertiary-fixed": "#00174b",
+            "inverse-on-surface": "#eef0ff",
+            "error": "#ba1a1a",
+            "on-primary-fixed-variant": "#264191",
+            "on-secondary-container": "#57657a",
+            "inverse-surface": "#283044",
+            "on-surface-variant": "#444651",
+            "surface-container-lowest": "#ffffff",
+            "inverse-primary": "#b6c4ff",
+            "surface-container-high": "#e2e7ff",
+            "surface-container-highest": "#dae2fd",
+            "on-primary-container": "#90a8ff",
+            "secondary-fixed": "#d5e3fc",
+            "primary-container": "#1e3a8a",
+            "on-error": "#ffffff",
+            "on-secondary-fixed-variant": "#3a485b",
+            "on-secondary": "#ffffff",
+            "on-tertiary-fixed-variant": "#003ea8",
+            "surface-tint": "#4059aa",
+            "on-surface": "#131b2e",
+            "surface-container": "#eaedff",
+            "secondary-fixed-dim": "#b9c7df",
+            "secondary-container": "#d5e3fc",
+            "on-primary-fixed": "#00164e",
+            "error-container": "#ffdad6",
+            "outline": "#757682",
+            "primary": "#00236f",
+            "surface-container-low": "#f2f3ff",
+            "on-tertiary-container": "#8da9ff",
+            "secondary": "#515f74",
+            "primary-fixed-dim": "#b6c4ff"
+          },
+          borderRadius: {
+            DEFAULT: "0.25rem",
+            lg: "0.5rem",
+            xl: "0.75rem",
+            full: "9999px"
+          },
+          spacing: {
+            "space-lg": "1.5rem",
+            "space-md": "1rem",
+            "space-xs": "0.25rem",
+            "space-xl": "2rem",
+            "space-sm": "0.5rem",
+            "margin-compact": "1rem",
+            margin: "2rem",
+            gutter: "1.5rem",
+            "gutter-dense": "1rem"
+          },
+          fontFamily: {
+            "body-sm": ["Inter"],
+            "label-sm": ["Inter"],
+            "headline-sm": ["Inter"],
+            display: ["Inter"],
+            "body-lg": ["Inter"],
+            "label-md": ["Inter"],
+            "headline-md": ["Inter"],
+            "body-md": ["Inter"],
+            "headline-lg": ["Inter"],
+            "tabular-data": ["Inter"]
+          },
+          fontSize: {
+            "body-sm": ["13px", { lineHeight: "18px", letterSpacing: "0em", fontWeight: "400" }],
+            "label-sm": ["11px", { lineHeight: "14px", letterSpacing: "0.04em", fontWeight: "600" }],
+            "headline-sm": ["16px", { lineHeight: "24px", letterSpacing: "0em", fontWeight: "600" }],
+            display: ["32px", { lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "700" }],
+            "body-lg": ["16px", { lineHeight: "24px", letterSpacing: "0em", fontWeight: "400" }],
+            "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "500" }],
+            "headline-md": ["20px", { lineHeight: "28px", letterSpacing: "-0.01em", fontWeight: "600" }],
+            "body-md": ["14px", { lineHeight: "20px", letterSpacing: "0em", fontWeight: "400" }],
+            "headline-lg": ["24px", { lineHeight: "32px", letterSpacing: "-0.015em", fontWeight: "600" }],
+            "tabular-data": ["13px", { lineHeight: "18px", letterSpacing: "0em", fontWeight: "400" }]
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body class="bg-background font-body-md text-on-surface antialiased">
+
+  <!-- ================= CONSISTENT SIDEBAR NAVIGATION ================= -->
+  <aside class="fixed left-0 top-0 h-screen w-60 bg-surface-container-lowest border-r border-outline-variant/40 z-50 flex flex-col justify-between select-none">
+    <div class="flex flex-col">
+      
+      <!-- Institutional Brand Header (Exact Match with Home Page) -->
+      <div class="h-16 px-space-md border-b border-outline-variant/30 flex items-center min-w-0">
+        <a href="home.html" class="flex items-center gap-space-sm min-w-0">
+          <div class="w-9 h-9 rounded bg-primary-container text-on-primary flex items-center justify-center shrink-0 shadow-sm">
+            <span class="material-symbols-outlined text-[20px]">school</span>
+          </div>
+          <div class="flex flex-col min-w-0">
+            <span class="font-headline-sm text-headline-sm leading-tight text-on-surface truncate">Smart College</span>
+            <span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary">Education Record System</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="p-space-md"></div>
+
+      <!-- Main Clean Navigation (Consistent Across Pages) -->
+      <nav id="sidebarNav" class="px-space-sm space-y-space-xs">
+        
+        <!-- 1. Home Page -->
+        <a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-sm text-body-sm transition-colors" href="home.html">
+          <span class="material-symbols-outlined text-[18px]">home</span>
+          <span>Home</span>
+        </a>
+
+        <!-- 2. Student Dashboard (Shown only if logged in as Student) -->
+        <a id="navStudentDashboard" class="hidden items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-sm text-body-sm transition-colors" href="student-dashboard.html">
+          <span class="material-symbols-outlined text-[18px]">dashboard</span>
+          <span>Student Dashboard</span>
+        </a>
+
+        <!-- 3. Detailed Marks (Shown only if logged in as Student) -->
+        <a id="navStudentMarks" class="hidden items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-sm text-body-sm transition-colors" href="student-marks.html">
+          <span class="material-symbols-outlined text-[18px]">grade</span>
+          <span>Detailed Marks</span>
+        </a>
+
+        <!-- 4. Faculty Dashboard (Shown only if logged in as Faculty) -->
+        <a id="navFacultyDashboard" class="hidden items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-sm text-body-sm transition-colors" href="faculty-dashboard.html">
+          <span class="material-symbols-outlined text-[18px]">badge</span>
+          <span>Faculty Dashboard</span>
+        </a>
+
+        <!-- 5. Students List (Shown only if logged in as Faculty) -->
+        <a id="navFacultyStudents" class="hidden items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-sm text-body-sm transition-colors" href="faculty-students.html">
+          <span class="material-symbols-outlined text-[18px]">group</span>
+          <span>Students List</span>
+        </a>
+
+        <!-- 6. Announcements (Shown only if logged in as Faculty) -->
+        <a id="navFacultyAnnouncements" class="hidden items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-sm text-body-sm transition-colors" href="faculty-announcements.html">
+          <span class="material-symbols-outlined text-[18px]">campaign</span>
+          <span>Announcements</span>
+        </a>
+
+        <!-- 7. About ERS (Active Page) -->
+        <a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-space-xs rounded transition-colors bg-secondary-container text-primary font-semibold" href="about.html">
+          <span class="material-symbols-outlined text-[18px]">info</span>
+          <span>About ERS</span>
+        </a>
+
+        <!-- 8. Sign Out / Portal Login -->
+        <a id="navLoginItem" class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-sm text-body-sm transition-colors" href="../index.html">
+          <span id="navLoginIcon" class="material-symbols-outlined text-[18px]">login</span>
+          <span id="navLoginText">Portal Login</span>
+        </a>
+
+      </nav>
+    </div>
+
+    <!-- Institutional Footer Compliance Strip (Exact Match with Home Page) -->
+    <div class="p-space-md border-t border-outline-variant/30 bg-surface-container-low">
+      <div class="flex items-center gap-space-xs mb-space-xs text-secondary">
+        <span class="material-symbols-outlined text-[14px]">verified_user</span>
+        <span class="font-label-sm text-label-sm font-semibold tracking-wide uppercase">FERPA Compliant</span>
+      </div>
+      <p class="font-label-sm text-label-sm text-on-surface-variant leading-tight">TLS 1.3 Secure • Institutional Node v4.2.1</p>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN CONTENT WRAPPER ================= -->
+  <div class="pl-60 min-h-screen flex flex-col bg-background">
+    
+    <!-- Top Bar Header (Exact Match Height, Alignment, and Styling with Home Page) -->
+    <header class="fixed top-0 left-60 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-md border-b border-outline-variant/40 z-40 px-space-lg flex items-center justify-between">
+      <div class="flex items-center gap-space-md text-on-surface-variant font-label-md text-label-md">
+        <span class="flex items-center gap-space-xs text-secondary font-medium">
+          <span class="material-symbols-outlined text-[16px]">calendar_today</span>
+          <span>Academic Session 2025–2026</span>
+        </span>
+        <span class="text-outline-variant">•</span>
+        <span class="text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded text-[11px] font-semibold">
+          Platform Specification v4.2
+        </span>
+      </div>
+
+      <!-- Header Profile & Actions -->
+      <div class="flex items-center gap-space-md">
+        <button class="w-8 h-8 rounded flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button" title="Campus Circulars" onclick="alert('All institutional circulars are up to date.')">
+          <span class="material-symbols-outlined text-[20px]">notifications</span>
+        </button>
+        
+        <a id="headerUserBtn" href="../index.html" class="flex items-center gap-2 p-1 pr-2.5 rounded-full hover:bg-surface-container transition-colors border border-transparent hover:border-outline-variant/30">
+          <div class="w-8 h-8 rounded-full bg-primary-container text-on-primary flex items-center justify-center shadow-xs">
+            <span class="material-symbols-outlined text-[18px]">person</span>
+          </div>
+          <span id="headerUserName" class="font-label-md text-label-md text-on-surface font-semibold hidden md:inline">Institutional Login</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Main Content Body -->
+    <main class="relative pt-16 flex-1 w-full p-margin bg-background">
+      <div class="flex flex-col w-full space-y-space-lg">
+        
+        <!-- Hero Specification Card -->
+        <div class="bg-surface-container-lowest rounded-xl shadow-sm p-space-xl flex flex-col gap-space-lg relative overflow-hidden border border-outline-variant/30">
+          <div class="absolute right-0 top-0 w-96 h-96 bg-secondary-container/20 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
+          
+          <div class="flex flex-col gap-space-sm relative z-10">
+            <div class="flex flex-wrap items-center gap-space-xs">
+              <span class="inline-flex items-center gap-space-xs bg-surface-container-low text-primary px-space-sm py-0.5 rounded font-label-sm text-label-sm tracking-wide uppercase border border-outline-variant/30 font-semibold">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
+                Institutional Architecture &amp; Overview
+              </span>
+              <span class="text-outline-variant">•</span>
+              <span class="font-label-sm text-label-sm text-secondary tracking-wider uppercase font-mono">Platform Specification v4.2</span>
+            </div>
+            
+            <h1 class="font-display text-display text-on-surface tracking-tight font-bold">
+              About Smart College ERS <span class="font-normal text-secondary font-headline-md text-headline-md block sm:inline sm:ml-space-xs">(Education Record System)</span>
+            </h1>
+            
+            <p class="font-body-lg text-body-lg text-on-surface-variant max-w-4xl leading-relaxed mt-space-xs">
+              The Smart College Education Record System provides an authoritative, fault-tolerant infrastructure designed to modernize collegiate academic record keeping, statutory compliance, continuous evaluation logging, and secure data centralization. Engineered to meet strict FERPA mandates and regional accreditation standards, the platform unifies real-time institutional metrics across student, faculty, and administrative tiers.
+            </p>
+          </div>
+
+          <!-- 4 Architecture Metric Pillars -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md pt-space-md bg-surface-container-low/50 -mx-space-xl -mb-space-xl p-space-lg border-t border-outline-variant/20">
+            <div class="flex items-start gap-space-sm">
+              <span class="material-symbols-outlined text-primary text-[20px] mt-0.5">token</span>
+              <div class="flex flex-col">
+                <span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary">Architectural Paradigm</span>
+                <span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Dual-Role Ledger</span>
+              </div>
+            </div>
+            
+            <div class="flex items-start gap-space-sm">
+              <span class="material-symbols-outlined text-primary text-[20px] mt-0.5">policy</span>
+              <div class="flex flex-col">
+                <span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary">Statutory Framework</span>
+                <span class="font-headline-sm text-headline-sm text-on-surface font-semibold">FERPA &amp; Title IV</span>
+              </div>
+            </div>
+            
+            <div class="flex items-start gap-space-sm">
+              <span class="material-symbols-outlined text-primary text-[20px] mt-0.5">verified</span>
+              <div class="flex flex-col">
+                <span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary">Audit Status</span>
+                <span class="font-headline-sm text-headline-sm text-on-surface font-semibold">SOC2 Type II Certified</span>
+              </div>
+            </div>
+            
+            <div class="flex items-start gap-space-sm">
+              <span class="material-symbols-outlined text-primary text-[20px] mt-0.5">group</span>
+              <div class="flex flex-col">
+                <span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary">Target Cohorts</span>
+                <span class="font-headline-sm text-headline-sm text-on-surface font-semibold">UG, PG, Faculty &amp; Registrar</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2x2 Feature & Specification Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
+          
+          <!-- Card 1: System Core & Architecture -->
+          <div class="bg-surface-container-lowest rounded-xl p-space-lg flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow border border-outline-variant/30">
+            <div class="flex flex-col gap-space-md">
+              <div class="flex items-center justify-between">
+                <span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary bg-surface-container-low px-space-sm py-0.5 rounded border border-outline-variant/20 font-semibold">
+                  System Core &amp; Architecture
+                </span>
+                <div class="w-10 h-10 rounded-lg bg-surface-container-high text-primary flex items-center justify-center">
+                  <span class="material-symbols-outlined text-[22px]">database</span>
+                </div>
+              </div>
+              
+              <div>
+                <h2 class="font-headline-md text-headline-md text-on-surface font-semibold">Website Purpose &amp; Core Features</h2>
+                <p class="font-body-md text-body-md text-on-surface-variant mt-space-xs leading-normal">
+                  A centralized system for student records, automated attendance calculation with statutory 75% quorum threshold alerting, continuous unit mark tracking (Internal Assessment I &amp; II, lab evaluations), and instant authenticated institutional notices.
+                </p>
+              </div>
+
+              <div class="bg-surface-container-low rounded-lg p-space-md my-space-xs flex items-center justify-between border border-outline-variant/20">
+                <div class="flex flex-col">
+                  <span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">Attendance Quorum Rule</span>
+                  <span class="font-headline-sm text-headline-sm text-primary font-bold">75.0% Mandatory</span>
+                </div>
+                <div class="w-32 bg-surface-container rounded-full h-2.5 overflow-hidden">
+                  <div class="bg-primary h-full w-3/4 rounded-full"></div>
+                </div>
+              </div>
+
+              <ul class="space-y-space-sm pt-space-xs">
+                <li class="flex items-start gap-space-sm">
+                  <span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">check_circle</span>
+                  <span class="font-body-sm text-body-sm text-on-surface">Centralized student biodata and semester enrollment ledger</span>
+                </li>
+                <li class="flex items-start gap-space-sm">
+                  <span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">check_circle</span>
+                  <span class="font-body-sm text-body-sm text-on-surface">Real-time lecture-by-lecture biometric &amp; sensor attendance calculation</span>
+                </li>
+                <li class="flex items-start gap-space-sm">
+                  <span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">check_circle</span>
+                  <span class="font-body-sm text-body-sm text-on-surface">Standardized internal unit marks scoring with weighted GPA projections</span>
+                </li>
+                <li class="flex items-start gap-space-sm">
+                  <span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">check_circle</span>
+                  <span class="font-body-sm text-body-sm text-on-surface">Broadcast circulars with department head digital authentication</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="mt-space-lg pt-space-sm flex items-center justify-between text-secondary font-label-sm text-label-sm border-t border-outline-variant/20">
+              <span class="font-mono">Component Ref: MOD-01-CORE</span>
+              <span class="flex items-center gap-1 font-medium text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded"><span class="w-2 h-2 rounded-full bg-emerald-600"></span>Active Runtime</span>
+            </div>
+          </div>
+
+          <!-- Card 2: Student Portal Details -->
+          <div class="bg-surface-container-lowest rounded-xl p-space-lg flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow border border-outline-variant/30">
+            <div class="flex flex-col gap-space-md">
+              <div class="flex items-center justify-between">
+                <span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary bg-surface-container-low px-space-sm py-0.5 rounded border border-outline-variant/20 font-semibold">
+                  Read-Only Certified Access
+                </span>
+                <div class="w-10 h-10 rounded-lg bg-surface-container-high text-primary flex items-center justify-center">
+                  <span class="material-symbols-outlined text-[22px]">badge</span>
+                </div>
+              </div>
+
+              <div>
+                <h2 class="font-headline-md text-headline-md text-on-surface font-semibold">Student Portal Details</h2>
+                <p class="font-body-md text-body-md text-on-surface-variant mt-space-xs leading-normal">
+                  PIN-based identity mapping (e.g. 22481A4201) delivering cryptographic credential recovery, a read-only telemetry dashboard, subject-wise analytics with visual quorum status bars, and strict zero-tamper data protection.
+                </p>
+              </div>
+
+              <div class="grid grid-cols-2 gap-space-sm my-space-xs">
+                <div class="bg-surface-container-low rounded-lg p-space-sm flex items-center gap-space-sm border border-outline-variant/20">
+                  <div class="w-3 h-3 rounded-full bg-emerald-600"></div>
+                  <div class="flex flex-col">
+                    <span class="font-label-sm text-label-sm text-secondary">Quorum Met</span>
+                    <span class="font-tabular-data text-tabular-data text-on-surface font-semibold">&gt;= 75% Attendance</span>
+                  </div>
+                </div>
+                <div class="bg-surface-container-low rounded-lg p-space-sm flex items-center gap-space-sm border border-outline-variant/20">
+                  <div class="w-3 h-3 rounded-full bg-amber-600"></div>
+                  <div class="flex flex-col">
+                    <span class="font-label-sm text-label-sm text-secondary">Warning Level</span>
+                    <span class="font-tabular-data text-tabular-data text-on-surface font-semibold">&lt; 75% At-Risk</span>
+                  </div>
+                </div>
+              </div>
+
+              <ul class="space-y-space-sm pt-space-xs">
+                <li class="flex items-start gap-space-sm">
+                  <span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">check_circle</span>
+                  <span class="font-body-sm text-body-sm text-on-surface">PIN and encrypted credential authentication layer</span>
+                </li>
+                <li class="flex items-start gap-space-sm">
+                  <span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">check_circle</span>
+                  <span class="font-body-sm text-body-sm text-on-surface">High-clarity 2x2 personal attendance and score monitoring</span>
+                </li>
+                <li class="flex items-start gap-space-sm">
+                  <span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">check_circle</span>
+                  <span class="font-body-sm text-body-sm text-on-surface">Subject indicators with high-contrast quorum threshold signaling</span>
+                </li>
+                <li class="flex items-start gap-space-sm">
+                  <span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">check_circle</span>
+                  <span class="font-body-sm text-body-sm text-on-surface">Strict read-only state guaranteeing permanent ledger integrity</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="mt-space-lg pt-space-sm flex items-center justify-between text-secondary font-label-sm text-label-sm border-t border-outline-variant/20">
+              <span class="font-mono">Component Ref: MOD-02-STU</span>
+              <span class="flex items-center gap-1 font-medium text-primary"><span class="w-2 h-2 rounded-full bg-primary"></span>Enforced Sandbox</span>
+            </div>
+          </div>
+
+          <!-- Card 3: Faculty Portal Details -->
+          <div class="bg-surface-container-lowest rounded-xl p-space-lg flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow border border-outline-variant/30">
+            <div class="flex flex-col gap-space-md">
+              <div class="flex items-center justify-between">
+                <span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary bg-surface-container-low px-space-sm py-0.5 rounded border border-outline-variant/20 font-semibold">
+                  Administrative &amp; Evaluation Console
+                </span>
+                <div class="w-10 h-10 rounded-lg bg-surface-container-high text-primary flex items-center justify-center">
+                  <span class="material-symbols-outlined text-[22px]">assignment_turned_in</span>
+                </div>
+              </div>
+
+              <div>
+                <h2 class="font-headline-md text-headline-md text-on-surface font-semibold">Faculty Portal Details</h2>
+                <p class="font-body-md text-body-md text-on-surface-variant mt-space-xs leading-normal">
+                  Facilitates institutional email-based authentication (@college.edu) with multi-factor security, new student cohort onboarding, subject-wise lecture attendance logging, and unit grading pipelines.
+                </p>
+              </div>
+
+              <div class="bg-surface-container-low rounded-lg p-space-sm my-space-xs flex items-center gap-space-md border border-outline-variant/20">
+                <span class="material-symbols-outlined text-primary text-[24px]">vpn_key</span>
+                <div class="flex flex-col">
+                  <span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary">Security Protocol</span>
+                  <span class="font-body-sm text-body-sm font-semibold text-on-surface">Duo MFA / OAuth2 Federated Single Sign-On</span>
+                </div>
+              </div>
+
+              <ul class="space-y-space-sm pt-space-xs">
+                <li class="flex items-start gap-space-sm">
+                  <span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">check_circle</span>
+                  <span class="font-body-sm text-body-sm text-on-surface">Two-tier authenticated instructor sign-in with SSO support</span>
+                </li>
+                <li class="flex items-start gap-space-sm">
+                  <span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">check_circle</span>
+                  <span class="font-body-sm text-body-sm text-on-surface">Fast batch attendance entry and cohort quorum reconciliation</span>
+                </li>
+                <li class="flex items-start gap-space-sm">
+                  <span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">check_circle</span>
+                  <span class="font-body-sm text-body-sm text-on-surface">Direct continuous unit test grading &amp; laboratory rubric submissions</span>
+                </li>
+                <li class="flex items-start gap-space-sm">
+                  <span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">check_circle</span>
+                  <span class="font-body-sm text-body-sm text-on-surface">Integrated multi-channel circular publishing (Portal Notice + SMS Dispatch)</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="mt-space-lg pt-space-sm flex items-center justify-between text-secondary font-label-sm text-label-sm border-t border-outline-variant/20">
+              <span class="font-mono">Component Ref: MOD-03-FAC</span>
+              <span class="flex items-center gap-1 font-medium text-primary"><span class="w-2 h-2 rounded-full bg-primary"></span>Write Access Ledger</span>
+            </div>
+          </div>
+
+          <!-- Card 4: Benefits of the System -->
+          <div class="bg-surface-container-lowest rounded-xl p-space-lg flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow border border-outline-variant/30">
+            <div class="flex flex-col gap-space-md">
+              <div class="flex items-center justify-between">
+                <span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary bg-surface-container-low px-space-sm py-0.5 rounded border border-outline-variant/20 font-semibold">
+                  Institutional Value &amp; Impact
+                </span>
+                <div class="w-10 h-10 rounded-lg bg-surface-container-high text-primary flex items-center justify-center">
+                  <span class="material-symbols-outlined text-[22px]">trending_up</span>
+                </div>
+              </div>
+
+              <div>
+                <h2 class="font-headline-md text-headline-md text-on-surface font-semibold">Benefits of the System</h2>
+                <p class="font-body-md text-body-md text-on-surface-variant mt-space-xs leading-normal">
+                  Complete elimination of physical paper registers, institutional transparency across departments, strict role-based access control (RBAC), and low-latency accessible cloud synchronization.
+                </p>
+              </div>
+
+              <div class="grid grid-cols-2 gap-space-sm my-space-xs text-center">
+                <div class="bg-surface-container-low rounded-lg p-space-sm border border-outline-variant/20">
+                  <span class="font-headline-md text-headline-md text-primary font-bold block">100%</span>
+                  <span class="font-label-sm text-label-sm text-secondary">Paperless Ledger</span>
+                </div>
+                <div class="bg-surface-container-low rounded-lg p-space-sm border border-outline-variant/20">
+                  <span class="font-headline-md text-headline-md text-primary font-bold block">&lt; 150ms</span>
+                  <span class="font-label-sm text-label-sm text-secondary">Record Sync Latency</span>
+                </div>
+              </div>
+
+              <ul class="space-y-space-sm pt-space-xs">
+                <li class="flex items-start gap-space-sm">
+                  <span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">check_circle</span>
+                  <span class="font-body-sm text-body-sm text-on-surface">100% elimination of paper registers and manual ledger errors</span>
+                </li>
+                <li class="flex items-start gap-space-sm">
+                  <span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">check_circle</span>
+                  <span class="font-body-sm text-body-sm text-on-surface">Absolute transparency eliminating grade dispute friction</span>
+                </li>
+                <li class="flex items-start gap-space-sm">
+                  <span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">check_circle</span>
+                  <span class="font-body-sm text-body-sm text-on-surface">Strict zero-trust RBAC isolating student and faculty permissions</span>
+                </li>
+                <li class="flex items-start gap-space-sm">
+                  <span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">check_circle</span>
+                  <span class="font-body-sm text-body-sm text-on-surface">Rapid, multi-device accessibility with instantaneous real-time sync</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="mt-space-lg pt-space-sm flex items-center justify-between text-secondary font-label-sm text-label-sm border-t border-outline-variant/20">
+              <span class="font-mono">Component Ref: MOD-04-VAL</span>
+              <span class="flex items-center gap-1 font-medium text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded"><span class="w-2 h-2 rounded-full bg-emerald-600"></span>Full Compliance</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Documentation & Support Footer Banner -->
+        <div class="bg-surface-container-lowest rounded-xl shadow-sm px-space-lg py-space-md flex flex-col md:flex-row items-center justify-between gap-space-md border border-outline-variant/30">
+          <div class="flex flex-wrap items-center gap-space-sm">
+            <span class="inline-flex items-center gap-space-xs bg-surface-container px-space-sm py-1 rounded text-primary font-label-md text-label-md font-medium">
+              <span class="material-symbols-outlined text-[16px]">menu_book</span>
+              Official Institutional Documentation
+            </span>
+            <span class="inline-flex items-center gap-space-xs bg-surface-container px-space-sm py-1 rounded text-secondary font-label-md text-label-md font-medium">
+              <span class="material-symbols-outlined text-[16px]">verified</span>
+              Academic Council Approved
+            </span>
+          </div>
+          
+          <div class="flex items-center gap-space-sm font-body-sm text-body-sm text-on-surface-variant">
+            <span class="material-symbols-outlined text-secondary text-[18px]">support_agent</span>
+            <span>Registrar Support Desk:</span>
+            <a class="text-primary font-medium hover:underline" href="mailto:helpdesk@college.edu">helpdesk@college.edu</a>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Supabase JS Client SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Scripts -->
+  <script src="../js/config.js"></script>
+  <script src="../js/supabaseClient.js"></script>
+  <script src="../js/facultyData.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Theme Management (Sync with localStorage)
+      const lightToggle = document.getElementById('lightThemeToggle');
+      const darkToggle = document.getElementById('darkThemeToggle');
+      const savedTheme = localStorage.getItem('ers_theme') || 'light';
+      applyTheme(savedTheme);
+
+      function applyTheme(theme) {
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+          document.body.classList.add('dark-mode');
+        } else {
+          document.documentElement.classList.remove('dark');
+          document.body.classList.remove('dark-mode');
+        }
+        localStorage.setItem('ers_theme', theme);
+      }
+
+      if (lightToggle) lightToggle.addEventListener('click', () => applyTheme('light'));
+      if (darkToggle) darkToggle.addEventListener('click', () => applyTheme('dark'));
+
+      // 2. Authentication Context Recognition & Role-Based Navigation
+      const currentUser = window.authService?.getCurrentUser();
+      const headerUserBtn = document.getElementById('headerUserBtn');
+      const headerUserName = document.getElementById('headerUserName');
+      const signOutLink = document.getElementById('signOutLink');
+      const signOutLabel = document.getElementById('signOutLabel');
+      const navStudentDashboard = document.getElementById('navStudentDashboard');
+      const navStudentMarks = document.getElementById('navStudentMarks');
+      const navFacultyDashboard = document.getElementById('navFacultyDashboard');
+      const navFacultyStudents = document.getElementById('navFacultyStudents');
+      const navFacultyAnnouncements = document.getElementById('navFacultyAnnouncements');
+      const navLoginItem = document.getElementById('navLoginItem');
+      const navLoginIcon = document.getElementById('navLoginIcon');
+      const navLoginText = document.getElementById('navLoginText');
+
+      if (currentUser && currentUser.role === 'student') {
+        // Show Student Navigation
+        navStudentDashboard.classList.remove('hidden');
+        navStudentDashboard.classList.add('flex');
+        navStudentMarks.classList.remove('hidden');
+        navStudentMarks.classList.add('flex');
+
+        navFacultyDashboard.classList.add('hidden');
+        navFacultyDashboard.classList.remove('flex');
+        navFacultyStudents.classList.add('hidden');
+        navFacultyStudents.classList.remove('flex');
+        navFacultyAnnouncements.classList.add('hidden');
+        navFacultyAnnouncements.classList.remove('flex');
+
+        headerUserName.textContent = currentUser.name || 'Student';
+        headerUserBtn.href = 'student-dashboard.html';
+
+        navLoginIcon.textContent = 'logout';
+        navLoginText.textContent = 'Sign Out';
+        navLoginItem.href = '#';
+        navLoginItem.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.authService.logout();
+        });
+
+        signOutLabel.textContent = 'Sign Out';
+        signOutLink.href = '#';
+        signOutLink.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.authService.logout();
+        });
+      } else if (currentUser && currentUser.role === 'faculty') {
+        // Show Faculty Navigation
+        navFacultyDashboard.classList.remove('hidden');
+        navFacultyDashboard.classList.add('flex');
+        navFacultyStudents.classList.remove('hidden');
+        navFacultyStudents.classList.add('flex');
+        navFacultyAnnouncements.classList.remove('hidden');
+        navFacultyAnnouncements.classList.add('flex');
+
+        navStudentDashboard.classList.add('hidden');
+        navStudentDashboard.classList.remove('flex');
+        navStudentMarks.classList.add('hidden');
+        navStudentMarks.classList.remove('flex');
+
+        headerUserName.textContent = currentUser.name || 'Faculty Member';
+        headerUserBtn.href = 'faculty-dashboard.html';
+
+        navLoginIcon.textContent = 'logout';
+        navLoginText.textContent = 'Sign Out';
+        navLoginItem.href = '#';
+        navLoginItem.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.authService.logout();
+        });
+
+        signOutLabel.textContent = 'Sign Out';
+        signOutLink.href = '#';
+        signOutLink.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.authService.logout();
+        });
+      } else {
+        // Guest mode / Not logged in: Hide both dashboards from navigation
+        navStudentDashboard.classList.add('hidden');
+        navStudentDashboard.classList.remove('flex');
+        navStudentMarks.classList.add('hidden');
+        navStudentMarks.classList.remove('flex');
+        navFacultyDashboard.classList.add('hidden');
+        navFacultyDashboard.classList.remove('flex');
+        navFacultyStudents.classList.add('hidden');
+        navFacultyStudents.classList.remove('flex');
+        navFacultyAnnouncements.classList.add('hidden');
+        navFacultyAnnouncements.classList.remove('flex');
+
+        headerUserName.textContent = 'Institutional Login';
+        headerUserBtn.href = '../index.html';
+
+        navLoginIcon.textContent = 'login';
+        navLoginText.textContent = 'Portal Login';
+        navLoginItem.href = '../index.html';
+
+        signOutLabel.textContent = 'Portal Login';
+        signOutLink.href = '../index.html';
+      }
+    });
+  </script>
+</body>
+</html>
